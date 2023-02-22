@@ -14,8 +14,13 @@ class CreatePlaylistsTable extends Migration
     public function up()
     {
         Schema::create('playlists', function (Blueprint $table) {
-            $table->id();
+            $table->string('id');
             $table->timestamps();
+            $table->string('publishedAt')->nullable();
+            $table->string('title')->nullable();
+            $table->string('description',3000)->nullable();
+            $table->json('thumbnails')->nullable();
+            $table->integer('itemCount')->nullable();
         });
     }
 
