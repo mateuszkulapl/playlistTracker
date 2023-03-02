@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PlaylistController;
 use App\Models\Playlist;
 use Illuminate\Support\Facades\Route;
 
@@ -13,24 +14,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-
-
-
-// foreach ($json->items as $key => $item) {
-//   $s=new Playlist([
-//     'id'=>$item->id,
-//     'title'=>$item->snippet->title,
-//     'description'=>$item->snippet->description,
-//     'thumbnails'=>json_encode($item->snippet->thumbnails),
-//     'itemCount'=>$item->contentDetails->itemCount
-//   ]);
-// $s->save();
-// }
-
-$playlists=Playlist::all();
-foreach ($playlists as $key => $playlist) {
-  echo $playlist->title;
-}
+Route::controller(PlaylistController::class)->group(function () {
+    Route::get('/', 'index')->name('playlist.index');
 });

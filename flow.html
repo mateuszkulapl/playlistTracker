@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding in flow</title>
+    <style>
+        ol {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            row-gap: 1vw;
+            column-gap: 1vw;
+            justify-content: space-around;
+            background: #263238;
+        }
+
+        ::marker {
+            color: white;
+        }
+
+        .videos {
+            /* border: 2px solid black; */
+            /* padding: 20px; */
+            width: 30%;
+            background: #37474f;
+            border: 1px solid #455a64;
+            box-shadow: 2px 2px 4px 0px #455a64;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            align-content: stretch;
+        }
+
+        h2 {
+            word-break: break-word;
+            color: #bdbdbd;
+            transition: .2s;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        * {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .videos:hover {
+            box-shadow: 2px 2px 6px 2px #607d8b;
+            transition: .2s;
+        }
+
+        a {
+            height: 100%;
+        }
+
+        a h2 {
+            padding: 0.2vw .8vw;
+            text-align: center;
+            word-break: break-word;
+        }
+
+        .videos a:hover h2 {
+            color: #fff;
+            transition: .2s;
+
+        }
+
+
+        iframe {
+            max-width: 100%;
+        }
+
+        li.videos {
+            list-style: number;
+            display: list-item;
+        }
+    </style>
+
+</head>
+
+<body>
+    <ol>
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCfAe7QK2BoMPkv2TGM_b0E">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/Udk6iaR-RXA/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCf2UvOl6H1tQ8iAGo4UBL8w4A_Gg">
+            <h2>MVVM To-Do List App with Flow and Architecture Components</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCamMFswP597mUF-whXoAA6">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/kIudIii4uLU/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDdUerVaM0Lur0ksPvReUJZu04ekg">
+            <h2>Getting Started With Navigation Component</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuC_pEfFlZuTmjlY4T3DTtED">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/m_cMJehM9xc/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLD-0ERToA53JsXV8tLMLna4tx5W8A">
+            <h2>MVVM Image Search App with Architecture Components & Retrofit</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDl4WUKi26WbzLMsM1sXCD4">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/QfQE1ayCzf8/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBM1QsPoSGr-WG8OpLtK8cZLNWtMw">
+            <h2>Android Threads, Looper, MessageQueue & Handler Explained</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuAK8t5D3S307OalNJeJOk2U">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/bgIUdb-7Rqo/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCKu02Md-d84xChkNAx9It0aSz_fA">
+            <h2>Navigation - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuA2ioi4soDZKz8euUQnJW65">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/ZZ_qek0hGkM/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLApHejkg__Sk2ZD-PcVkDcKXtynJQ">
+            <h2>Dagger 2 Beginner Tutorial - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCbuD3xpfKzQWOj3AXybSaM">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/4JGvDUlfk7Y/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBnRTerumWepgvUUq9ZVY-BzqscHg">
+            <h2>Retrofit Tutorial for Beginners - Android Programming</h2>
+        </li>
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDihTpkRs6SpZhqgBqPU118">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/ARpn-1FPNE4/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLD5PHbstYB0VoRbBtXxnhEcQlTCPg">
+            <h2>Android Architecture Components Beginner Tutorial - Room + ViewModel + LiveData + RecyclerView (MVVM)
+            </h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuAXdWxOzsN5rgG2M4uJ8bH1">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/ub6mNHWGVHw/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCr8Okxj6SyarwpLU5oZsNOzeHQQA">
+            <h2>FirebaseUI - Firestore + RecyclerView (FirestoreRecyclerAdapter) - Android Studio Tutorial</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuD1skmFHLcPYduqQAQaNGQY">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/tTLmz-JKxsI/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBjMk5LcmowFvIaixZho5lCYGeJdA">
+            <h2>Spans and Spannables - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuBqr_0AS9BPXgU6gvNeai5S">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/8FJ3oOpHszc/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCiTiJ8HCHvQIXfbKlbfLgPHHp-Wg">
+            <h2>BroadcastReceiver Tutorial - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuBhmqlWEQfvxbNtY6B_XJ3n">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/3EQWmME-hNA/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLC0RcBYYGimyBoLeK3rjyWe_pKRpw">
+            <h2>Services & Background Tasks - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCN52QwGu7YTSLIMrjCF0gM">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/tTbd1Mfi-Sk/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAKNZ6XYK7uEma5C5-fGsQXdejPhQ">
+            <h2>Notifications & Notification Channels Tutorial - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuD52mtV8NvazNYIyIVPVZRa">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/QfQE1ayCzf8/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBM1QsPoSGr-WG8OpLtK8cZLNWtMw">
+            <h2>Threading - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuBJwo9Zt3AQwpRax4RtrReD">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/vnLwpkBoDdU/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCnoPMuNbq-U-YjX_LIPgDwi6Uljw">
+            <h2>EditText Tutorials - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDrSqu-dKdDi3Q6nM-VUyxD">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/vMnCU6KKHd4/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA24U94U2OXjHcCfG3fla-rilF4qw">
+            <h2>Cloud Firestore Android Tutorial</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuA13xifLjrMytwHDDnkTqUk">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/dz-JbF9B04Y/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDLgYoUrBiZnbc1nnRQ6JaSXa54-w">
+            <h2>Custom AutoCompleteTextView - Android Studio Tutorial</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCVWUUxmhA-3YR17S9xsY5k">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/xL7irChmFkY/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCdMknm-vOv_bM-x-0fcBvtaq82vw">
+            <h2>Styling Android Studio / IntelliJ IDEA</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuBtcos16XJnfFx2fSUOyW_-">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/KJGKj078Qag/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLC5vmmnSNn9u1tJeN_C1wu00DIOdQ">
+            <h2>Layout Tutorials - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDCoET8jL2VK4YVRNhVEy0K">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/xGQJg31TPtU/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAfKz4WLwhlynfZhJ1XJjWejuQDlw">
+            <h2>App Widget Tutorial - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDzT1ggoW-gMHRwLf2vmkuT">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/bqgseI9pHwE/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBda99GQO7Oy6OYIJroLM0cSP3ozA">
+            <h2>Simple Android Studio Game Tutorials</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCmNI3IQLu1tw8T-ZDqMEQ3">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/DLa-QWb8d-0/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAXORRKVZmaz6twzuwfPBfiYzPbpg">
+            <h2>Android Studio / IntelliJ IDEA Keyboard Shortcuts</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDCyg4Usq2gHMzz6_CiyQO7">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/PiCZQg4mhBQ/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAt_gd5kskyslIfPHyM9G9hWTroeg">
+            <h2>SQLite Multiple Choice Quiz - Android Studio Tutorial</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuD8EEgV5_GIhaIky-brwbwx">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/JVokoelQ1RI/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCp3CgCgirjrKFPMg9zzvWRb1t9dA">
+            <h2>Android Dev Quick Tips - Short Tutorials Under 3 Minutes</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuA80lNWNCLICR3qYzhw3iPI">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/4N4bCdyGcUc/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCcz2fc0t1QjUIBTmTQR8fYNKJIow">
+            <h2>ConstraintLayout Tutorial - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCTyi1Gesn5TTbKVuhAjf8q">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/C_Ka7cKwXW0/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLC78Jsbt9lT0wONVkquO4O3P4jGIg">
+            <h2>Playing Sounds and Music - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuD5mUhTDHRvKSr3XySIpRJ5">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/DLa-QWb8d-0/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAXORRKVZmaz6twzuwfPBfiYzPbpg">
+            <h2>Android Studio Productivity Tips & Tricks</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDKeQdD6AIu_vo4J_hPpMWl">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/ikxsvMyHVlM/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCAwCDaiWrFSPQi5fKNXZ1LQku4tA">
+            <h2>General Android/Programming Knowledge</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuB9jxCReqit-b_AgaErBlJK">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/8Lq3HyBCuAA/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDIjVGPJo9fJIRBoAxnWMxiHt0dhg">
+            <h2>Media Playback - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDeEk_E_DPOtKdf_HQ6BS36">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/f-kcvxYZrB4/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDqJV-Ou9Lwqq_jemtTMVWgNUBTlw">
+            <h2>GSON Tutorial - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCH99R_1qBLtsNGZJag1xy5">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/x_juFIQeTgI/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLC_48xTmO0n07qTSOcCCHLGfgLj4w">
+            <h2>Bottom Sheets - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/MDuGwI6P-X8/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDI5FHHZdGr3pkP573JVGv7y8wI3g">
+            <h2>CountDownTimer Tutorial (Start/Pause/Reset + Input Time + Running in the Background) - Android
+                Programming
+            </h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuD5iaFGRn9kM2-KCQ7bBNJE">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/sZ1fLi4QZ-g/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAIDLvmQXSHUubEC6-hxRnRhEiEPA">
+            <h2>Toasts - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuBf5KH4XXOthtgo6E4Epjl8">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/JVokoelQ1RI/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCp3CgCgirjrKFPMg9zzvWRb1t9dA">
+            <h2>Firebase Tutorials - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuAt6otixVMdUVM6pIlJ64Ov">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/xL7irChmFkY/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCdMknm-vOv_bM-x-0fcBvtaq82vw">
+            <h2>Android Studio & Emulator Settings</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuBAaN07RO7boUrFT4gkDlpL">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/afl_i6uvvU0/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAU4queAo6_4bizetRkeFFxLbQWnA">
+            <h2>Adapter Class Examples - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuB_7nB5QD-4bNg6tpdEUImQ">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/MfCiiTEwt3g/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLD3OR-c9bcYvLbZzwCpQD5OM3LiAA">
+            <h2>Image Uploading App with Firebase Cloud Storage + Firebase Realtime Database - Android Studio Tutorial
+            </h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDa61sipybvE4YFsEpQa9hG">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/Tdb_WSEEZbQ/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBnc7g_LwYV1g08fljHt2H5X1y2qw">
+            <h2>Image Loading Libraries - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCPNCW2xdriIUgxmo9-QcFi">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/4JGvDUlfk7Y/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBnRTerumWepgvUUq9ZVY-BzqscHg">
+            <h2>Online Features / Networking - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuBdsuDMl3I-EOEOnCh6JNF3">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/0IoG-mSvWSo/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA-U3IE_WvyNXAmqwLzsbXNoBy5-A">
+            <h2>Working with JSON on Android</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuA0ykzsHIdQUC5yKxArSM2V">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/apDL78MFR3o/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAZNFfTFL5WBfyY8rh9Lte9K4O3ng">
+            <h2>Tic Tac Toe - Android Studio Tutorial (With Code)</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuBGRfcaH4XiLzjzUkj-rk4L">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/oh4YOj9VkVE/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAaybCX6mEWbIfwL3PqNSyUofDg2A">
+            <h2>Menus - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuAWIa1JCho4PGgNTNK0dfJ_">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/Le47R9H3qow/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBx-xVR0BD1SVSBFD53mcHZZIGhtA">
+            <h2>Date & Time - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDhc8v_LMlREaqMtJRau1xI">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/bbFLDR6X2D8/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCQizla9tJCEE-Nssghfs99rVkSvQ">
+            <h2>Android Studio / IntelliJ IDEA Features & Plugins</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuBCiCxN8JPFI57Zhr5SusRL">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/bPDW9SdsGMo/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDgUtC1jEFVkq0zd4sSKNRUSfghvg">
+            <h2>RecyclerView + Volley + Picasso Tutorial - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDKMpu23RJ2NjQif6FuYzRV">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/SMrB97JuIoM/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDMctUDC8N78CzhXtpIMlLfixCklw">
+            <h2>Runtime Permission Request - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCAIsSa72eZDTRJktpUT-7y">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/NHMdxcy3KV4/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDo6Gzgf6k3YO7Yg9FXFBYcWMpUBQ">
+            <h2>Displaying, Styling & Animating Text - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDJsRLWnl-AV4WQVgkJ1HU4">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/fJEFZ6EOM9o/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLC8cuv2vf0h3emOAemhGuar0x8jgA">
+            <h2>Data Persistence - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCe3salXOlA5oyxBfq96ean">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/7qXwgD45b4w/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDKPbyVrS2lrpCK09WDBuKs8KfljQ">
+            <h2>Using Colors - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCB6HJnqCdJ174JV7IwDsFQ">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/bbFLDR6X2D8/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCQizla9tJCEE-Nssghfs99rVkSvQ">
+            <h2>Third Party Libraries & Tools - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuCaFbD-1TsnRaO39huczYcA">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/bgIUdb-7Rqo/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCKu02Md-d84xChkNAx9It0aSz_fA">
+            <h2>Simple & Easy App Features - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuARS1W7qMt-zxBNqWYZpOg6">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/otMSB-dFuY8/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDjkGsKkbMdgvFwW5lzKDFmDngNBQ">
+            <h2>Images, Animations, Transitions - Android Programming</h2>
+        </li>
+
+
+        <li class="videos"
+            data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLrnPJCHvNZuDR7-cBjRXssxYK0Y5EEKzr">
+            <div class="iframe"></div>
+            <img
+                src="https://i.ytimg.com/vi/JVokoelQ1RI/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCp3CgCgirjrKFPMg9zzvWRb1t9dA">
+            <h2>Notifications - Android Programming</h2>
+        </li>
+        <ol>
+
+            <script>
+                let videos = document.querySelectorAll('.videos');
+                for (let index = 0; index < videos.length; index++) {
+                    videos[index].addEventListener("click", function (e) {
+                        if (this.dataset.insert !== "false") {
+                            this.dataset.insert = "false"
+                            const iframe = document.createElement("iframe");
+                            iframe.src = this.dataset.src;
+                            iframe.width = "1014px";
+                            iframe.height = "310px";
+                            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+                            this.querySelector('img').style = "display:none";
+                            this.querySelector('.iframe').appendChild(iframe);
+                        }
+                    });
+
+
+                }
+
+            </script>
+</body>
+
+</html>

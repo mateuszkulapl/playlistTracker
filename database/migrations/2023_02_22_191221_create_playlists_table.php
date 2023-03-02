@@ -21,6 +21,8 @@ class CreatePlaylistsTable extends Migration
             $table->string('description',3000)->nullable();
             $table->json('thumbnails')->nullable();
             $table->integer('itemCount')->nullable();
+            $table->dateTime('watchedAt')->nullable();
+            $table->softDeletes();
         });
     }
 
