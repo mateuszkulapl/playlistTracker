@@ -49,6 +49,22 @@ class IndexPlaylists extends Component
         $this->emit('unwatched');
     }
 
+    public function setProgress($id)
+    {
+        $edit = Playlist::find($id);
+        $edit->inprogress=true;
+        $edit->save();
+        $this->mount();
+        $this->emit('progressed');
+    }
+    public function setUnprogress($id)
+    {
+        $edit = Playlist::find($id);
+        $edit->inprogress=false;
+        $edit->save();
+        $this->mount();
+        $this->emit('unprogressed');
+    }
     public function delete($id)
     {
         $edit = Playlist::find($id);

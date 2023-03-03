@@ -5,16 +5,17 @@
 
     <div class="grid gap-4 gap-y-4">
         @foreach ($playlists as $key => $playlist)
-            <div style="order:{{ $playlist->order }}" @class([
-                'watched bg bg-green-300 border-green-800' => $playlist->watchedAt != null,
-                'border-2 border-gray-200 shadow-md flex flex-col
-                hover:-m-2
-                hover:p-2 hover:z-10
-                hover:bg-neutral-100
-                duration-100
-                bg-neutral-50
-                group 
-                ',
+        <div style="order:{{ $playlist->order }}" @class([
+                
+            'border-2 border-gray-200 shadow-md flex flex-col
+            hover:-m-2
+            hover:p-2 hover:z-10
+            duration-100
+            group 
+            ',
+            'watched bg bg-green-200 border-green-800' => $playlist->watchedAt != null,
+            'watched bg bg-violet-200 border-violet-800' => $playlist->inprogress == true && $playlist->watchedAt == null,
+            'bg-neutral-50 hover:bg-neutral-100' => $playlist->watchedAt == null&&$playlist->inprogress != true,
             ])>
                 <div class="flex flex-row align-middle justify-between ">
                     <div class="basis-1/12 flex flex-col justify-between items-center">
@@ -43,9 +44,18 @@
                     <div class=" flex flex-row basis-4/12 lg:basis-3/12 justify-between gap-2">
                         <div class="flex flex-col py-1 basis-4/12 justify-center items-end gap-y-2">
                             <a class="border border-blue-400 text-gray-600 px-2 rounded-2xl bg-sky-200 hover:border-blue-600 hover:bg-blue-50 hover:ring-1 hover:shadow-sm" href="https://www.youtube.com/playlist?list={{ $playlist->id }}" target="_blank">Otwórz</a>
+
+
                             @if ($playlist->watchedAt == null)
                                 <button class="border bg-emerald-200 border-green-400 text-gray-600 px-2 rounded-2xl
                                     hover:border-green-600 hover:bg-green-50 hover:ring-1 hover:shadow-sm" wire:click="watch('{{ $playlist->id }}')">Ukończ</button>
+                                @if ($playlist->inprogress != true)
+                                <button class="border bg-violet-200 border-violet-400 text-gray-600 px-2 rounded-2xl
+                                hover:border-violet-600 hover:bg-green-50 hover:ring-1 hover:shadow-sm" wire:click="setProgress('{{ $playlist->id }}')">W trakcie</button>
+                                @else
+                                <button class="border bg-violet-200 border-violet-400 text-gray-600 px-2 rounded-2xl
+                                hover:border-violet-600 hover:bg-green-50 hover:ring-1 hover:shadow-sm" wire:click="setUnprogress('{{ $playlist->id }}')">Przerwij</button>
+                                @endif
                             @endif
                             <button class="border bg-red-200 border-red-400 text-gray-600 px-2 rounded-2xl
                                         hover:border-red-600 hover:bg-red-50 hover:ring-1 hover:shadow-sm" wire:click="delete('{{ $playlist->id }}')">Usuń</button>
@@ -62,4 +72,5 @@
             </div>
         @endforeach
     </div>
+    <span class="bg bg-green-300 border-green-800"></span>
 </div>
