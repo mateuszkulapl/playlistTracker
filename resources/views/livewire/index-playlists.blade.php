@@ -42,7 +42,7 @@
  
                     <div class=" flex flex-row basis-4/12 lg:basis-3/12 justify-between gap-2">
                         <div class="flex flex-col py-1 basis-4/12 justify-center items-end gap-y-2">
-                            <a class="border border-blue-400 text-gray-600 px-2 rounded-2xl bg-sky-200 hover:border-blue-600 hover:bg-blue-50 hover:ring-1 hover:shadow-sm" href="https://www.youtube.com/playlist?list={{ $playlist->id }}">Otwórz</a>
+                            <a class="border border-blue-400 text-gray-600 px-2 rounded-2xl bg-sky-200 hover:border-blue-600 hover:bg-blue-50 hover:ring-1 hover:shadow-sm" href="https://www.youtube.com/playlist?list={{ $playlist->id }}" target="_blank">Otwórz</a>
                             @if ($playlist->watchedAt == null)
                                 <button class="border bg-emerald-200 border-green-400 text-gray-600 px-2 rounded-2xl
                                     hover:border-green-600 hover:bg-green-50 hover:ring-1 hover:shadow-sm" wire:click="watch('{{ $playlist->id }}')">Ukończ</button>
