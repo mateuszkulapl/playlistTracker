@@ -22,7 +22,8 @@ class PlaylistController extends Controller
             );
         } else {
             return view(
-                'playlist.login'
+                'playlist.index'
+                //'playlist.login'
             );
         }
     }
