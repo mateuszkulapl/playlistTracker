@@ -1,6 +1,7 @@
 <div>
-    <div class="mb-6 h-5 w-full bg-neutral-200 dark:bg-neutral-600">
-        <div class="h-5 bg-green-600" style="width: {{ $percentage }}%"></div>
+    <div class="mb-6 h-5 w-full bg-neutral-200 border-gray-600 border relative">
+        <div class="h-5 bg-green-600 absolute z-20" style="width: {{ $percentage }}%"></div>
+        <div class="h-5 bg-violet-600 absolute z-10" style="width: {{ $percentage+$progressPercentage }}%"></div>
     </div>
 
     <div class="grid gap-4 gap-y-4">

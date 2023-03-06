@@ -9,6 +9,7 @@ class IndexPlaylists extends Component
 {
     public $playlists;
     public $percentage;
+    public $progressPercentage;
 
     public function mount()
     {
@@ -19,6 +20,7 @@ class IndexPlaylists extends Component
     {
         $this->playlists = Playlist::all()->sortBy('order');
         $this->percentage = $this->playlists->where('watchedAt', '!=', null)->count() / $this->playlists->count() * 100;
+        $this->progressPercentage = $this->playlists->where('watchedAt', '==', null)->where('inprogress', '==', true)->count() / $this->playlists->count() * 100;
         $i = 1;
         foreach ($this->playlists as $key => $playlist) {
             if ($playlist->order != $i) {

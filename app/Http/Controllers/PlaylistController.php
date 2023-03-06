@@ -15,19 +15,16 @@ class PlaylistController extends Controller
      */
     public function index()
     {
-        $playlists = Playlist::all()->sortBy('order');
-        // $i=1;
-        // foreach ($playlists as $key => $playlist) {
-        //    $playlist->order=$i;
-        //    $playlist->save();
-        //    $i++;
-        // }
-        return view(
-            'playlist.index',
-            [
-                'playlists' => $playlists
-            ]
-        );
+
+        if (request()->input('login') != null && request()->input('login') === env('login')) {
+            return view(
+                'playlist.index'
+            );
+        } else {
+            return view(
+                'playlist.login'
+            );
+        }
     }
 
     /**
