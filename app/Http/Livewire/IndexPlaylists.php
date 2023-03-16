@@ -21,6 +21,10 @@ class IndexPlaylists extends Component
         $this->playlists = Playlist::all()->sortBy('order');
         $this->percentage = $this->playlists->where('watchedAt', '!=', null)->count() / $this->playlists->count() * 100;
         $this->progressPercentage = $this->playlists->where('watchedAt', '==', null)->where('inprogress', '==', true)->count() / $this->playlists->count() * 100;
+    }
+    
+    public function reindex()
+    {
         $i = 1;
         foreach ($this->playlists as $key => $playlist) {
             if ($playlist->order != $i) {
@@ -54,7 +58,7 @@ class IndexPlaylists extends Component
     public function setProgress($id)
     {
         $edit = Playlist::find($id);
-        $edit->inprogress=true;
+        $edit->inprogress = true;
         $edit->save();
         $this->mount();
         $this->emit('progressed');
@@ -62,7 +66,7 @@ class IndexPlaylists extends Component
     public function setUnprogress($id)
     {
         $edit = Playlist::find($id);
-        $edit->inprogress=false;
+        $edit->inprogress = false;
         $edit->save();
         $this->mount();
         $this->emit('unprogressed');
@@ -71,6 +75,7 @@ class IndexPlaylists extends Component
     {
         $edit = Playlist::find($id);
         $edit->delete();
+        $this->reindex();
         $this->mount();
         $this->emit('deleted');
     }
@@ -78,6 +83,7 @@ class IndexPlaylists extends Component
     {
         $edit = Playlist::find($id);
         $edit->undelete();
+        $this->reindex();
         $this->mount();
         $this->emit('undeleted');
     }
@@ -89,8 +95,6 @@ class IndexPlaylists extends Component
         if ($edit && $target) {
             $edit->moveBy(-1);
             $target->moveBy(1);
-            $edit->save();
-            $target->save();
 
             $this->mount();
             $this->emit('moved');
@@ -103,9 +107,29 @@ class IndexPlaylists extends Component
         if ($edit && $target) {
             $edit->moveBy(1);
             $target->moveBy(-1);
-            $edit->save();
-            $target->save();
 
+            $this->mount();
+            $this->emit('moved');
+        }
+    }
+    public function moveTo($id, $targetNumber)
+    {
+        //move id to target position, move all between id and target up or down
+        $edit = Playlist::find($id);
+        if ($edit) {
+            if ($edit->order < $targetNumber) //move down
+            {
+                foreach (Playlist::where('order', '>', $edit->order)->where('order', '<=', $targetNumber)->get() as $playlist) {
+                    $playlist->moveBy(-1);
+                }
+            } else //move up
+            {
+                foreach ($ps = Playlist::where('order', '<', $edit->order)->where('order', '>=', $targetNumber)->get() as $playlist) {
+                    $playlist->moveBy(1);
+                }
+            }
+            $edit->order = $targetNumber;
+            $edit->save();
             $this->mount();
             $this->emit('moved');
         }
