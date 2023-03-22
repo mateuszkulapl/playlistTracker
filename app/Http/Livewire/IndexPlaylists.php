@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Category;
 use App\Models\Playlist;
 use Livewire\Component;
 
@@ -10,19 +11,32 @@ class IndexPlaylists extends Component
     public $playlists;
     public $percentage;
     public $progressPercentage;
-
+    public $category;
+    public $categories;
     public function mount()
     {
+        $this->category = Category::find(1);
+        $this->getPlaylists();
+        $this->categories = Category::all();
+    }
+    public function filterByCategory($id)
+    {
+        $this->category = Category::find($id);
         $this->getPlaylists();
     }
 
     public function getPlaylists()
     {
-        $this->playlists = Playlist::all()->sortBy('order');
-        $this->percentage = $this->playlists->where('watchedAt', '!=', null)->count() / $this->playlists->count() * 100;
-        $this->progressPercentage = $this->playlists->where('watchedAt', '==', null)->where('inprogress', '==', true)->count() / $this->playlists->count() * 100;
+        $this->playlists = $this->category->playlists->sortBy('order');
+        if ($this->playlists->count() == 0) {
+            $this->percentage = 0;
+            $this->progressPercentage = 0;
+        } else {
+            $this->percentage = $this->playlists->where('watchedAt', '!=', null)->count() / $this->playlists->count() * 100;
+            $this->progressPercentage = $this->playlists->where('watchedAt', '==', null)->where('inprogress', '==', true)->count() / $this->playlists->count() * 100;
+        }
     }
-    
+
     public function reindex()
     {
         $i = 1;

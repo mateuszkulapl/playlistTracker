@@ -1,4 +1,12 @@
 <div>
+    <div id="categories" class="mb-8">
+            @foreach ($categories as $category)
+                <span class="cursor-pointer font-bold hover:ring-1 px-2 border bg-slate-100 " wire:click="filterByCategory('{{ $category->id }}')">{{ $category->name }}</span>
+            @endforeach
+    </div>
+
+
+
     <div class="mb-6 h-5 w-full bg-neutral-200 relative">
         <div class="h-5 bg-green-600 absolute z-20 text-xs font-bold text-white text-center" style="width: {{ $percentage }}%">{{ round($percentage, 1) }}%</div>
         <div class="h-5 bg-violet-600 absolute z-10 text-xs font-bold text-white text-center" style="width: {{ $progressPercentage }}%; margin-left: {{ $percentage }}%">{{ round($percentage + $progressPercentage, 1) }}%</div>

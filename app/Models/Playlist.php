@@ -54,4 +54,8 @@ class Playlist extends Model
         $this->order=$this->order+$offset;
         $this->save();
     }
+
+    public function Category() {
+        return $this->belongsTo(Category::class);
+    }
 }

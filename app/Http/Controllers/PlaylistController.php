@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Playlist;
 use App\Http\Requests\StorePlaylistRequest;
 use App\Http\Requests\UpdatePlaylistRequest;
+use App\Models\Category;
 
 class PlaylistController extends Controller
 {
@@ -15,14 +16,14 @@ class PlaylistController extends Controller
      */
     public function index()
     {
-
+        $categories=Category::all();
         if (request()->input('login') != null && request()->input('login') === env('login')) {
             return view(
-                'playlist.index'
+                'playlist.index',['categories'=>$categories]
             );
         } else {
             return view(
-                'playlist.index'
+                'playlist.index',['categories'=>$categories]
                 //'playlist.login'
             );
         }
