@@ -55,7 +55,7 @@
                         @if ($playlist->order > 1)
                             <div class=" hover:text-green-900 relative group/move w-6 h-6">
                                 <span class="cursor-pointer font-bold hover:ring-1 px-2" wire:click="moveUp('{{ $playlist->id }}')">↑</span>
-                                <div class="targetPosition hidden bg-gray-700 text-gray-200 w-48 text-ce absolute group-hover/move:block rounded-md shadow-md -bottom-6 left-6 p-1 ">
+                                <div class="targetPosition hidden bg-gray-700 text-gray-200 w-48 text-ce absolute z-50 group-hover/move:block rounded-md shadow-md -bottom-6 left-6 p-1 ">
                                     <p class="text-center">Przesuń na pozycję</p>
                                     <div class="grid gap-1 grid-cols-5">
                                         @for ($i = 1; $i < $playlist->order; $i++)
@@ -68,7 +68,7 @@
                         @if ($playlist->order < $playlists->count())
                             <div class=" hover:text-green-900 relative group/move w-6 h-6">
                                 <span class="cursor-pointer font-bold hover:ring-1 px-2" wire:click="moveDown('{{ $playlist->id }}')">↓</span>
-                                <div class="targetPosition hidden bg-gray-700 text-gray-200 w-48 text-ce absolute group-hover/move:block rounded-md shadow-md -top-6 left-6 p-1 ">
+                                <div class="targetPosition hidden bg-gray-700 text-gray-200 w-48 text-ce absolute z-50 group-hover/move:block rounded-md shadow-md -top-6 left-6 p-1 ">
                                     <p class="text-center">Przesuń na pozycję</p>
                                     <div class="grid gap-1 grid-cols-5">
                                         @for ($i = $playlist->order+1; $i <= $playlists->count(); $i++)
