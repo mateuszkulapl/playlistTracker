@@ -4,8 +4,9 @@
             <span class="cursor-pointer font-bold hover:ring-1 px-2 border bg-slate-100 " wire:click="filterByCategory('{{ $cat->id }}')">{{ $cat->name }}</span>
         @endforeach
     </div>
-    @if ($category->id == 1 && $filterTags->count() == 0)
-        <x-playlists.targets :percentage="$percentage" :progressPercentage="$progressPercentage" />
+
+    @if ($filterTags->count() == 0)
+        <x-playlists.targets :percentage="$percentage" :category="$category" :progressPercentage="$progressPercentage" />
     @endif
     
     @livewire('show-tags', ['category' => $category])
