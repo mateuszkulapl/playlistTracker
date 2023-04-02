@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Category;
 use App\Models\Playlist;
+use App\Models\Tag;
 use Livewire\Component;
 
 class IndexPlaylists extends Component
@@ -13,10 +14,24 @@ class IndexPlaylists extends Component
     public $progressPercentage;
     public $category;
     public $categories;
+    public $tags;
+    public $filterTags;
+
+    protected $listeners = ['tagCreated' => 'afterTagCreated', 'tagsSelected' => 'filterByTags'];
+
     public function mount()
     {
-        $this->category = Category::find(1);
+
+        // $ps=Playlist::all();       
+        // foreach ($ps as $key => $playlist) {
+        //     $playlist->categories()->syncWithoutDetaching($playlist->category_id);
+        // }
+
+
+        $this->category = Category::first();
         $this->categories = Category::all();
+        $this->tags = $this->category->tags()->orderBy('name')->get();
+        $this->filterTags = collect();
         $this->getPlaylists();
     }
 
@@ -24,17 +39,34 @@ class IndexPlaylists extends Component
     {
         $this->getPlaylists();
         $this->categories = Category::all();
+        $this->tags = $this->category->tags()->orderBy('name')->get();
         //$this->reindex(); //todo: delete this
+    }
+
+    public function afterTagCreated()
+    {
+        $this->tags = $this->category->tags()->orderBy('name')->get();
     }
     public function filterByCategory($id)
     {
+        $this->filterTags = collect();
         $this->category = Category::find($id);
         $this->refresh();
+
+        $this->emit('categorySelected', $this->category->id);
     }
 
     public function getPlaylists()
     {
-        $this->playlists = $this->category->playlists->fresh()->sortBy('order');
+        $filterTags = $this->filterTags;
+        if ($filterTags->count() > 0) {
+            $this->playlists = $this->category->playlists()->with('tags')->whereHas('tags', function ($query) use ($filterTags) {
+                $query->whereIn('id', $filterTags);
+            })->orderBy('order')->get();
+        } else {
+            $this->playlists = $this->category->playlists()->with('tags')->orderBy('order')->get();
+        }
+
         if ($this->playlists->count() == 0) {
             $this->percentage = 0;
             $this->progressPercentage = 0;
@@ -66,6 +98,21 @@ class IndexPlaylists extends Component
         $edit->rate($rate);
         $this->refresh();
         $this->emit('rated');
+    }
+
+    public function attachTag($id, $tag_id)
+    {
+        $edit = Playlist::find($id);
+        $edit->tags()->syncWithoutDetaching($tag_id);
+        $this->refresh();
+        $this->emit('tagAttached');
+    }
+    public function detachTag($id, $tag_id)
+    {
+        $edit = Playlist::find($id);
+        $edit->tags()->detach($tag_id);
+        $this->refresh();
+        $this->emit('tagDetached');
     }
 
     public function watch($id)
@@ -161,5 +208,15 @@ class IndexPlaylists extends Component
             $this->refresh();
             $this->emit('moved');
         }
+    }
+
+
+    public function filterByTags($tags)
+    {
+        $this->filterTags=collect();
+        foreach ($tags as $tag_id) {
+            $this->filterTags->push($tag_id);
+        }
+        $this->refresh();
     }
 }

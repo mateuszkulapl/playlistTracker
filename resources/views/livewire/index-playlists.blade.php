@@ -7,10 +7,13 @@
     @if ($category->id == 1)
         <x-playlists.targets :percentage="$percentage" :progressPercentage="$progressPercentage" />
     @endif
-
+    
+    @livewire('show-tags', ['category' => $category])
+    @livewire('tag-form', ['category' => $category])
+    
     <div class="grid gap-4 gap-y-4">
         @foreach ($playlists as $key => $playlist)
-            <x-playlists.show :playlist="$playlist" :playlistsCount="$playlists->count()" />
+            <x-playlists.show.index :playlist="$playlist" :allTags="$tags" :playlistsCount="$playlists->count()" />
         @endforeach
     </div>
     <span class="bg bg-green-300 border-green-800"></span>

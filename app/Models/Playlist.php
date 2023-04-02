@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Playlist extends Model
@@ -55,10 +57,7 @@ class Playlist extends Model
         $this->save();
     }
 
-    public function Category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+
 
     public function getLink()
     {
@@ -72,5 +71,15 @@ class Playlist extends Model
     {
         $this->rating = $rate;
         $this->save();
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function tags():BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 }

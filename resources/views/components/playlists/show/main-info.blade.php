@@ -1,4 +1,4 @@
-@props(['playlist'])
+@props(['playlist', 'allTags'])
 
 <h2 class="text-black font-medium text-lg">{{ $playlist->title }}</h2>
 <div>
@@ -13,7 +13,8 @@
     </small>
     @if ($playlist->category_id != 1)
         <div class="rating">
-            <x-playlists.rating :rating="$playlist->rating" :id="$playlist->id" />
+            <x-playlists.show.rating :rating="$playlist->rating" :id="$playlist->id" />
         </div>
     @endif
+    <x-playlists.show.tags :id="$playlist->id" :tags="$playlist->tags" :allTags="$allTags"/>
 </div>
