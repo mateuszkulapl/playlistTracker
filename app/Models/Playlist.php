@@ -27,10 +27,16 @@ class Playlist extends Model
      */
     protected $keyType = 'string';
 
-    public function images()
+    public function images($size = 'medium')
     {
-        return json_decode($this->thumbnails);
+        $im = json_decode($this->thumbnails);
+        if (isset($im->$size)) {
+            return $im->$size->url;
+        } else {
+            return "";
+        }
     }
+    
     public function watch()
     {
         $this->watchedAt = now();

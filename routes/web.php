@@ -27,28 +27,26 @@ Route::controller(PlaylistController::class)->group(function () {
 
 //     $jsonA = '
 
-
 //   ';
 
 //     $json = json_decode($jsonA);
-//     $start = Category::find(3)->playlists->count();
+//     $start = Category::find(4)->playlists->count();
 
 //     foreach ($json->items as $key => $item) {
-//         $temp = Playlist::find($item->id->videoId);
+//         $temp = Playlist::find($item->snippet->resourceId->videoId);
 //         if ($temp) {
 //         } else {
 //             $s = new Playlist([
-//                 'id' => $item->id->videoId,
+//                 'id' => $item->snippet->resourceId->videoId,
 //                 'title' => $item->snippet->title,
-//                 'description' => $item->snippet->description,
+//                 'description' => \Illuminate\Support\Str::limit($item->snippet->description, 200, '...'),
 //                 'thumbnails' => json_encode($item->snippet->thumbnails),
 //                 'itemCount' => 1,
 //                 'publishedAt' => Carbon::parse($item->snippet->publishedAt),
-//                 'order' => $start + $key,
+//                 'order' => 1+$item->snippet->position,
 //             ]);
-//             $s->category()->associate(Category::find(3));
+//             $s->category()->associate(Category::find(4));
 //             $s->save();
-//             echo "saved";
 //         }
 //     }
 

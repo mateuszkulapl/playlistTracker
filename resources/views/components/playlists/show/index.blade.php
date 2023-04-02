@@ -34,7 +34,7 @@
                         <div class="bg-slate-900 text-gray-200 rounded-tl-xl p-1 pl-2 text-right z-30" title="Liczba filmów">▶{{ $playlist->itemCount }}</div>
                     </span>
                 @endif
-                <img class="hover:scale-150 group-hover:scale-105 hover:z-20 duration-100" src="{{ $playlist->images()->medium->url }}" alt="" {!! $playlist->order > 10 ? ' loading="lazy" ' : '' !!}>
+                <img class="hover:scale-150 group-hover:scale-105 hover:z-20 duration-100" src="{{ $playlist->images('medium') }}" alt="" {!! $playlist->order > 10 ? ' loading="lazy" ' : '' !!}>
             </div>
         </div>
     </div>
