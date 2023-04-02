@@ -16,14 +16,15 @@ class IndexPlaylists extends Component
     public function mount()
     {
         $this->category = Category::find(1);
-        $this->getPlaylists();
         $this->categories = Category::all();
+        $this->getPlaylists();
     }
 
     public function refresh()
     {
         $this->getPlaylists();
         $this->categories = Category::all();
+        //$this->reindex(); //todo: delete this
     }
     public function filterByCategory($id)
     {
@@ -58,6 +59,13 @@ class IndexPlaylists extends Component
     public function render()
     {
         return view('livewire.index-playlists');
+    }
+    public function rate($id, $rate)
+    {
+        $edit = Playlist::find($id);
+        $edit->rate($rate);
+        $this->refresh();
+        $this->emit('rated');
     }
 
     public function watch($id)
@@ -111,7 +119,7 @@ class IndexPlaylists extends Component
     public function moveUp($id)
     {
         $edit = Playlist::find($id);
-        $target = Playlist::where('order', ($edit->order) - 1)->where('category_id',$edit->category_id)->first();
+        $target = Playlist::where('order', ($edit->order) - 1)->where('category_id', $edit->category_id)->first();
         if ($edit && $target) {
             $edit->moveBy(-1);
             $target->moveBy(1);
@@ -123,7 +131,7 @@ class IndexPlaylists extends Component
     public function moveDown($id)
     {
         $edit = Playlist::find($id);
-        $target = Playlist::where('order', ($edit->order) + 1)->where('category_id',$edit->category_id)->first();
+        $target = Playlist::where('order', ($edit->order) + 1)->where('category_id', $edit->category_id)->first();
         if ($edit && $target) {
             $edit->moveBy(1);
             $target->moveBy(-1);
@@ -139,12 +147,12 @@ class IndexPlaylists extends Component
         if ($edit) {
             if ($edit->order < $targetNumber) //move down
             {
-                foreach (Playlist::where('order', '>', $edit->order)->where('order', '<=', $targetNumber)->where('category_id',$edit->category_id)->get() as $playlist) {
+                foreach (Playlist::where('order', '>', $edit->order)->where('order', '<=', $targetNumber)->where('category_id', $edit->category_id)->get() as $playlist) {
                     $playlist->moveBy(-1);
                 }
             } else //move up
             {
-                foreach ($ps = Playlist::where('order', '<', $edit->order)->where('order', '>=', $targetNumber)->where('category_id',$edit->category_id)->get() as $playlist) {
+                foreach ($ps = Playlist::where('order', '<', $edit->order)->where('order', '>=', $targetNumber)->where('category_id', $edit->category_id)->get() as $playlist) {
                     $playlist->moveBy(1);
                 }
             }
