@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{config('app.name') }}</title>
-    <link href="{{ asset('css/app.css') }}?v=1.2.0" rel="stylesheet">
-    <script src="{{ asset('js/app.js') }}?v=1.2.0" defer></script>
+    <link href="{{ asset('css/app.css') }}?v=1.3.2" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}?v=1.3.2" defer></script>
+    <link rel="stylesheet" href="/favicon.ico">
     @livewireStyles
 </head>
 
-<body class="font-sans text-gray-700 bg-slate-300 black flex flex-col h-screen">
+<body class="font-sans text-gray-700 bg-slate-300 black flex flex-col min-h-screen">
         <x-layout.header />
     <x-layout.main>
         {{ $slot }}

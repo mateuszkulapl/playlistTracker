@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+    background: url(/img/icon.png);
+    background-size: 5vw;
+    box-shadow: inset 0 0 0 50vw rgb(255 255 255 / 70%);
+}
+.text-shadow{
+    text-shadow: 1px 1px #88888888, -1px -1px #88888888, -1px 1px #88888888, 1px -1px #88888888;
+}
