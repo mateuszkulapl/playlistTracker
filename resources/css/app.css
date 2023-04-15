@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body{
-    background: url(/img/icon.png);
-    background-size: 5vw;
-    box-shadow: inset 0 0 0 50vw rgb(255 255 255 / 70%);
+    background: url(/img/background.png);
+    background-size: 40vw;
+    box-shadow: inset 0 0 0 50vw rgb(255 255 255 / 40%);
 }
 .text-shadow{
     text-shadow: 1px 1px #88888888, -1px -1px #88888888, -1px 1px #88888888, 1px -1px #88888888;
