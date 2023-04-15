@@ -2,7 +2,13 @@
 
     <div class="h-5 w-full bg-neutral-200 relative">
         <div class="h-5 bg-green-600 absolute z-20 text-xs font-bold text-white text-center text-shadow" style="width: {{ $percentage }}%">{{ round($percentage, 1) }}%</div>
-        <div class="h-5 bg-violet-600 absolute z-10 text-xs font-bold text-white text-center text-shadow" style="width: {{ $progressPercentage }}%; margin-left: {{ $percentage }}%">{{ round($percentage + $progressPercentage, 1) }}%</div>
+        @if ($progressPercentage > 0)
+            <div class="h-5 bg-violet-600 absolute z-10 text-xs font-bold text-white text-center text-shadow" style="width: {{ $progressPercentage }}%; margin-left: {{ $percentage }}%">
+                @if ($progressPercentage > 0.5)
+                    {{ round($percentage + $progressPercentage, 1) }}%
+                @endif
+            </div>
+        @endif
 
         <div class="progress-targets cursor-pointer">
             @foreach ($awards as $award)
