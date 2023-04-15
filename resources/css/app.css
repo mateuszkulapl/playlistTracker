@@ -10,3 +10,8 @@ body{
 .text-shadow{
     text-shadow: 1px 1px #88888888, -1px -1px #88888888, -1px 1px #88888888, 1px -1px #88888888;
 }
+
+.progress-targets .target:hover{
+    scale:2;
+    transform: translateX(-25%) translateY(-75%);
+}
