@@ -19,13 +19,17 @@ class Category extends Model
     /**
      * Get all of the playlists.
      */
-    public function playlists():HasMany
+    public function playlists(): HasMany
     {
         return $this->hasMany(Playlist::class);
     }
 
-    public function tags():HasMany
+    public function tags(): HasMany
     {
         return $this->hasMany(Tag::class);
+    }
+    public function awards(): HasMany
+    {
+        return $this->hasMany(Award::class);
     }
 }

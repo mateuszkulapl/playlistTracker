@@ -11,13 +11,13 @@ class TagForm extends Component
     public $name;
     public $category_id;
 
-    protected $listeners = ['categorySelected' => 'categorySelected'];
+    protected $listeners = ['categoryselected' => 'categoryselected'];
     protected $rules = [
         'name' => 'required|string|min:3|max:50|unique:tags,name',
         'category_id' => 'required'
     ];
 
-    public function categorySelected($category_id)
+    public function categoryselected($category_id)
     {
         $this->category_id = $category_id;
     }

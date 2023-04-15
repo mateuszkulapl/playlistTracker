@@ -11,14 +11,14 @@ class ShowTags extends Component
     public $tags;
     public $category;
     public $selectedTags = [];
- 
 
-    protected $listeners = ['tagCreated' => 'refresh','categorySelected' => 'categorySelected', 'tagDeleted' => 'refresh'];
+
+    protected $listeners = ['tagCreated' => 'refresh', 'categoryselected' => 'categoryselected', 'tagDeleted' => 'refresh'];
 
     public function mount($category)
     {
         $this->category = $category;
-        $this->tags =$category->tags()->orderBy('name')->get();
+        $this->tags = $category->tags()->orderBy('name')->get();
     }
 
     public function render()
@@ -48,7 +48,7 @@ class ShowTags extends Component
         $this->emit('tagDeleted');
     }
 
-    public function categorySelected($category_id)
+    public function categoryselected($category_id)
     {
         $this->category = Category::find($category_id);
         $this->refresh();

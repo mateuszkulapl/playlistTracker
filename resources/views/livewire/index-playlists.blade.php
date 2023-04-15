@@ -5,16 +5,13 @@
         @endforeach
     </div>
 
-    @if ($filterTags->count() == 0)
-        <x-playlists.targets :percentage="$percentage" :category="$category" :progressPercentage="$progressPercentage" />
-    @endif
-    
+    @livewire('show-awards', ['category' => $category, 'percentage' => $percentage, 'progressPercentage' => $progressPercentage])
     @livewire('show-tags', ['category' => $category])
     @livewire('tag-form', ['category' => $category])
-    
+
     <div class="grid gap-4 gap-y-4">
         @foreach ($playlists as $key => $playlist)
-            <x-playlists.show.index :playlist="$playlist" :allTags="$tags" :playlistsCount="$playlists->count()" />
+            @livewire('show-element', ['playlist' => $playlist, 'allTags' => $tags, 'playlistsCount' => $playlists->count()], key(time() . $playlist->id))
         @endforeach
     </div>
     <span class="bg bg-green-300 border-green-800"></span>

@@ -1,4 +1,3 @@
-@props(['playlist', 'playlistsCount', 'allTags'])
 <div style="order:{{ $playlist->order }}" @class([
     'border-2 border-gray-200 shadow-md flex flex-col
     hover:-m-2

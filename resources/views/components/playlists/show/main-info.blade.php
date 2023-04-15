@@ -7,7 +7,7 @@
 <div>
     <small class="">
         @if ($playlist->watchedAt != null)
-            Ukończono: {{ $playlist->watchedAt }} (<button wire:click="unwatch('{{ $playlist->id }}')">Cofnij</button>)
+            Ukończono: {{ $playlist->watchedAt }} (<button wire:click="unwatch()">Cofnij</button>)
         @endif
         &nbsp;
     </small>
@@ -16,5 +16,5 @@
             <x-playlists.show.rating :rating="$playlist->rating" :id="$playlist->id" />
         </div>
     @endif
-    <x-playlists.show.tags :id="$playlist->id" :tags="$playlist->tags" :allTags="$allTags"/>
+    <x-playlists.show.tags :id="$playlist->id" :tags="$playlist->tags" :allTags="$allTags" />
 </div>

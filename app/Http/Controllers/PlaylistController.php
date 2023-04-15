@@ -9,6 +9,7 @@ use App\Models\Category;
 
 class PlaylistController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,14 +17,16 @@ class PlaylistController extends Controller
      */
     public function index()
     {
-        $categories=Category::all();
+        $categories = Category::all();
         if (request()->input('login') != null && request()->input('login') === env('login')) {
             return view(
-                'playlist.index',['categories'=>$categories]
+                'playlist.index',
+                ['categories' => $categories]
             );
         } else {
             return view(
-                'playlist.index',['categories'=>$categories]
+                'playlist.index',
+                ['categories' => $categories]
                 //'playlist.login'
             );
         }

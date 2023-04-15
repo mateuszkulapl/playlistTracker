@@ -1,7 +1,7 @@
 @props(['rating', 'id'])
 <div class="flex items-center group/rate ">
     @for ($i = 1; $i <= 5; $i++)
-        <svg title="{{ $i }}/5" aria-hidden="true" wire:click="rate('{{ $id }}', {{ $i }})" @class([
+        <svg title="{{ $i }}/5" aria-hidden="true" wire:click="rate({{ $i }})" @class([
             'w-5 h-5 stroke-gray-600 cursor-pointer',
             'hover:text-blue-300',
             'peer peer-hover:text-gray-300',
