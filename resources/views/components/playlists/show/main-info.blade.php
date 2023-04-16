@@ -7,7 +7,7 @@
 <div>
     <small class="">
         @if ($playlist->watchedAt != null)
-            Ukończono: {{ $playlist->watchedAt }} (<button wire:click="unwatch()">Cofnij</button>)
+            Ukończono: <time title="{{ $playlist->watchedAt }}">{{ $playlist->watchedAt->locale('pl_PL')->diffForHumans() }}</time> (<button wire:click="unwatch()">Cofnij</button>)
         @endif
         &nbsp;
     </small>

@@ -27,6 +27,11 @@ class Playlist extends Model
      */
     protected $keyType = 'string';
 
+    protected $casts = [
+        'publishedAt' => 'datetime:Y-m-d H:i:s',
+        'watchedAt' => 'datetime:Y-m-d H:i:s',
+    ];
+
     public function images($size = 'medium')
     {
         $im = json_decode($this->thumbnails);
@@ -36,7 +41,7 @@ class Playlist extends Model
             return "";
         }
     }
-    
+
     public function watch()
     {
         $this->watchedAt = now();
@@ -84,7 +89,7 @@ class Playlist extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function tags():BelongsToMany
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }

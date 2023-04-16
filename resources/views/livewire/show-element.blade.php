@@ -4,6 +4,7 @@
     hover:p-2 hover:z-10
     duration-100
     group 
+    relative
     ',
     'watched bg bg-green-200 border-green-800' => $playlist->watchedAt != null,
     'watched bg bg-violet-200 border-violet-800' =>
@@ -13,9 +14,10 @@
 ])>
     <div class="flex flex-row align-middle justify-between ">
         <div class="basis-1/12 flex flex-col justify-between items-center">
-            <span class="w-full ">
+            <span class="w-full absolute left-0 top-0">
                 <div class="bg-slate-900 text-gray-200 rounded-br-xl p-1 w-10 text-right">#{{ $playlist->order }}</div>
             </span>
+            <span></span>{{--  playlist order placeholder --}}
             <x-playlists.show.move-buttons :playlist="$playlist" :playlistsCount="$playlistsCount" />
             <span></span>
         </div>
@@ -27,13 +29,15 @@
             <div class="basis-6/12">
                 <x-playlists.show.buttons :playlist="$playlist" />
             </div>
-            <div class="flex items-center basis-6/12 justify-end relative">
-                @if ($playlist->itemCount > 1)
-                    <span class="video-count absolute bottom-0 right-0 select-none cursor-pointer">
-                        <div class="bg-slate-900 text-gray-200 rounded-tl-xl p-1 pl-2 text-right z-30" title="Liczba filmów">▶{{ $playlist->itemCount }}</div>
-                    </span>
-                @endif
+            <div class="flex items-center basis-6/12 justify-end">
                 <img class="hover:scale-150 group-hover:scale-105 hover:z-20 duration-100" src="{{ $playlist->images('medium') }}" alt="" {!! $playlist->order > 10 ? ' loading="lazy" ' : '' !!}>
+
+                @if ($playlist->itemCount > 1)
+                    <span class="video-count absolute top-0 right-0 bg-slate-900 text-gray-200 rounded-bl-xl p-1 pl-2 text-right z-30" title="Liczba filmów">▶{{ $playlist->itemCount }}</span>
+                @endif
+                @if ($playlist->publishedAt)
+                    <time class="absolute bottom-0 right-0 bg-slate-900 text-gray-200 rounded-tl-xl p-1 pl-2 text-right z-30" title="Data publikacji: {{ $playlist->publishedAt }}">{{ $playlist->publishedAt->locale('pl_PL')->diffForHumans() }}</time>
+                @endif
             </div>
         </div>
     </div>
