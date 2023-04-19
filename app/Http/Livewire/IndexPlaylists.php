@@ -57,6 +57,13 @@ class IndexPlaylists extends Component
         $this->tags = $this->category->tags()->orderBy('name')->get();
         $this->getPlaylists();
     }
+
+    public function afterTagChanged()
+    {
+        $this->tags = $this->category->tags()->orderBy('name')->get();
+        $this->getPlaylists();
+    }
+
     public function filterByCategory($id)
     {
         $this->filterTags = collect();
