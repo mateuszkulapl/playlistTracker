@@ -15,3 +15,8 @@ body{
     scale:2;
     transform: translateX(-25%) translateY(-75%);
 }
+
+#scrollTop{
+    background-color: #ffd7b3;
+    color: #8c6e66;
+}

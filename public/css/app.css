@@ -468,6 +468,9 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.fixed {
+  position: fixed;
+}
 .absolute {
   position: absolute;
 }
@@ -486,17 +489,23 @@ video {
 .bottom-0 {
   bottom: 0px;
 }
+.bottom-8 {
+  bottom: 2rem;
+}
+.left-0 {
+  left: 0px;
+}
 .left-6 {
   left: 1.5rem;
 }
 .right-0 {
   right: 0px;
 }
+.right-8 {
+  right: 2rem;
+}
 .top-0 {
   top: 0px;
-}
-.left-0 {
-  left: 0px;
 }
 .z-10 {
   z-index: 10;
@@ -568,6 +577,9 @@ video {
 .h-10 {
   height: 2.5rem;
 }
+.h-12 {
+  height: 3rem;
+}
 .h-5 {
   height: 1.25rem;
 }
@@ -585,6 +597,9 @@ video {
 }
 .w-10 {
   width: 2.5rem;
+}
+.w-12 {
+  width: 3rem;
 }
 .w-24 {
   width: 6rem;
@@ -639,11 +654,6 @@ video {
 }
 .cursor-pointer {
   cursor: pointer;
-}
-.select-none {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
 }
 .list-none {
   list-style-type: none;
@@ -739,6 +749,9 @@ video {
 .rounded {
   border-radius: 0.25rem;
 }
+.rounded-full {
+  border-radius: 9999px;
+}
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -756,14 +769,14 @@ video {
   border-top-right-radius: 9999px;
   border-bottom-right-radius: 9999px;
 }
+.rounded-bl-xl {
+  border-bottom-left-radius: 0.75rem;
+}
 .rounded-br-xl {
   border-bottom-right-radius: 0.75rem;
 }
 .rounded-tl-xl {
   border-top-left-radius: 0.75rem;
-}
-.rounded-bl-xl {
-  border-bottom-left-radius: 0.75rem;
 }
 .border {
   border-width: 1px;
@@ -973,6 +986,10 @@ video {
 .font-sans {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -988,6 +1005,9 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+.font-black {
+  font-weight: 900;
 }
 .font-bold {
   font-weight: 700;
@@ -1095,6 +1115,10 @@ video {
   --tw-drop-shadow: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
+.drop-shadow-md {
+  --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -1123,6 +1147,11 @@ body{
 .progress-targets .target:hover{
     scale:2;
     transform: translateX(-25%) translateY(-75%);
+}
+
+#scrollTop{
+    background-color: #ffd7b3;
+    color: #8c6e66;
 }
 
 .after\:absolute::after {
