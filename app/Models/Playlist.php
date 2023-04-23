@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\CarbonInterval;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +33,27 @@ class Playlist extends Model
         'publishedAt' => 'datetime:Y-m-d H:i:s',
         'watchedAt' => 'datetime:Y-m-d H:i:s',
     ];
+
+    // /**
+    //  * Get the element's duration.
+    //  */
+    // protected function duration(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn (int $value) => CarbonInterval::createFromFormat('%sS', $this->duration)
+    //     );
+    // }
+
+    // /**
+    //  * Interact with the element's duration.
+    //  */
+    // protected function duration(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn (string $value) => ucfirst($value),
+    //         set: fn (string $value) => strtolower($value),
+    //     );
+    // }
 
     public function images($size = 'medium')
     {

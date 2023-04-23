@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\PlaylistController;
-use App\Models\Category;
-use App\Models\Playlist;
-use Carbon\Carbon;
+// use App\Models\Category;
+// use App\Models\Playlist;
+// use Carbon\Carbon;
+// use Carbon\CarbonInterval;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,3 +55,40 @@ Route::get('/', function () {
 
     dd($json);
 });
+*/
+
+
+
+
+
+
+/*
+
+
+Route::get('/', function () {
+
+    $jsonA = '
+   
+  ';
+
+    $json = json_decode($jsonA);
+    foreach ($json->items as $key => $item) {
+        $element = Playlist::find($item->id);
+        if ($element) {
+            $element->description=$item->snippet->description;
+            $element->channelId=$item->snippet->channelId;
+            $element->channelTitle=$item->snippet->channelTitle;
+            $element->duration=$item->contentDetails->duration;
+            $ci = CarbonInterval::create($item->contentDetails->duration)->totalSeconds;
+            var_dump($ci);
+
+        } else {
+            echo "not found";
+            var_dump($item);
+        }
+    }
+
+    //dd($json);
+});
+*/
+

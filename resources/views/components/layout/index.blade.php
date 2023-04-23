@@ -16,7 +16,7 @@
     <x-layout.header />
     <x-layout.main>
         {{ $slot }}
-        <button class="hidden fixed z-90 bottom-8 right-8 border-1 w-12 h-12 rounded-full drop-shadow-md text-3xl font-black" id="scrollTop" title="Wróć na górę strony" onclick="goToTop()">&uarr;</button>
+        <button class="hidden fixed z-90 bottom-8 right-8 border-1 w-12 h-12 rounded-full drop-shadow-md text-3xl font-black z-40 " id="scrollTop" title="Wróć na górę strony" onclick="goToTop()">&uarr;</button>
     </x-layout.main>
     <x-layout.footer class="">
         <p>&copy; {{ config('app.name') }}</p>
