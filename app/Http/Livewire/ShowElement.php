@@ -32,6 +32,12 @@ class ShowElement extends Component
         //$this->emit('rated');
     }
 
+    public function setDifficulty($difficulty)
+    {
+        $this->playlist->setDifficulty($difficulty);
+        //$this->emit('rated');
+    }
+
     public function attachTag($tag_id)
     {
         $this->playlist->tags()->syncWithoutDetaching($tag_id);

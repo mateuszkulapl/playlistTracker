@@ -19,4 +19,5 @@ body{
 #scrollTop{
     background-color: #ffd7b3;
     color: #8c6e66;
+    border: 1px solid #8c6e66;
 }

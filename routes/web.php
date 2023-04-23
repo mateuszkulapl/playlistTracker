@@ -55,40 +55,54 @@ Route::get('/', function () {
 
     dd($json);
 });
+
 */
 
+// Route::get('/', function () {
+
+//     $jsonA = '
 
 
+//    ';
 
+//     $json = json_decode($jsonA);
+//     foreach ($json->items as $key => $item) {
+//         $element = Playlist::find($item->id);
+//         if ($element) {
+//             $element->description=\Illuminate\Support\Str::limit($item->snippet->description, 2000, '...');
+//             $element->channelId=$item->snippet->channelId;
+//             $element->channelTitle=$item->snippet->channelTitle;
+//             $element->duration=CarbonInterval::make($item->contentDetails->duration);
+//             $element->thumbnails = json_encode($item->snippet->thumbnails);
 
+//             $element->save();
+//         } else {
+//             echo "not found";
+//             var_dump($item);
+//         }
+//     }
 
-/*
+    
+//     $ps=Playlist::where('duration',null)->get();
+//     // dd($ps);
+//     echo count($ps)."<br>";
+    
+//     $i=0;
+//     foreach ($ps as $key => $value) {
+     
+//      if(strlen($value->id)<20)
+//      {
+//          echo $value->id.",";
+//         $i=$i+1;
+    
+    
+//         if($i%50==0)
+//         {
+//             echo "<br><br><br>";
+//         }
+//      }
+//     }
+    
 
-
-Route::get('/', function () {
-
-    $jsonA = '
-   
-  ';
-
-    $json = json_decode($jsonA);
-    foreach ($json->items as $key => $item) {
-        $element = Playlist::find($item->id);
-        if ($element) {
-            $element->description=$item->snippet->description;
-            $element->channelId=$item->snippet->channelId;
-            $element->channelTitle=$item->snippet->channelTitle;
-            $element->duration=$item->contentDetails->duration;
-            $ci = CarbonInterval::create($item->contentDetails->duration)->totalSeconds;
-            var_dump($ci);
-
-        } else {
-            echo "not found";
-            var_dump($item);
-        }
-    }
-
-    //dd($json);
-});
-*/
+// });
 

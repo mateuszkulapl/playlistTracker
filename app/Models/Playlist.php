@@ -34,6 +34,45 @@ class Playlist extends Model
         'watchedAt' => 'datetime:Y-m-d H:i:s',
     ];
 
+
+
+    /**
+     * Get the element's duration.
+     *
+     * @param  int  $value
+     * @return CarbonInterval
+     */
+    public function getDurationAttribute($value)
+    {
+        return CarbonInterval::create(0)->seconds($value)->cascade();
+    }
+
+
+    /**
+     * Get the element's duration formatted.
+     *
+     * @return void
+     */
+    public function durationFormatted()
+    {
+        $d = $this->duration;
+        if ($this->duration->h > 0) {
+            return sprintf('%d:%02d:%02d', $d->h, $d->i, $d->s);
+        } else {
+            return sprintf('%d:%02d', $d->i, $d->s);
+        }
+    }
+
+    /**
+     * Set the element's duration.
+     *
+     * @param  CarbonInterval  $value
+     * @return void
+     */
+    public function setDurationAttribute($value)
+    {
+        $this->attributes['duration'] = $value->totalSeconds;
+    }
     // /**
     //  * Get the element's duration.
     //  */
@@ -104,6 +143,15 @@ class Playlist extends Model
     public function rate($rate)
     {
         $this->rating = $rate;
+        $this->save();
+    }
+    public function setDifficulty($difficulty)
+    {
+        if ($difficulty > 5)
+            $difficulty = 5;
+        if ($difficulty < 1)
+            $difficulty = null;
+        $this->difficulty = $difficulty;
         $this->save();
     }
 
