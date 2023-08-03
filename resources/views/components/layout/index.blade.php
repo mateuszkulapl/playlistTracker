@@ -17,6 +17,24 @@
     <x-layout.main>
         {{ $slot }}
         <button class="hidden fixed z-90 bottom-8 right-8 border-1 w-12 h-12 rounded-full drop-shadow-md text-3xl font-black z-40 " id="scrollTop" title="Wróć na górę strony" onclick="goToTop()">&uarr;</button>
+        <audio class="hidden" controls autoplay id="cheer">
+  <source class="hidden" src="cheer.mp3" type="audio/mpeg" >
+</audio>
+<script>
+  // Funkcja wywołana po kliknięciu w przycisk z klasą "fsdfsdfsd"
+  function handleButtonClick() {
+    // Odtwórz dźwięk z elementu audio o id="cheer"
+    document.getElementById("cheer").play();
+  }
+
+  // Pobieramy wszystkie przyciski z klasą "fsdfsdfsd"
+  const buttons = document.getElementsByClassName("endbutton");
+
+  // Dodajemy obsługę zdarzenia kliknięcia dla każdego przycisku
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener("click", handleButtonClick);
+  }
+</script>
     </x-layout.main>
     <x-layout.footer class="">
         <p>&copy; {{ config('app.name') }}</p>

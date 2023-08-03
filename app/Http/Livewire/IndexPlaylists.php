@@ -37,7 +37,8 @@ class IndexPlaylists extends Component
         // }
 
 
-        $this->category = Category::first();
+        $this->category = Category::where('id',5)->first();
+        // $this->category = Category::first();
         $this->categories = Category::all();
         $this->tags = $this->category->tags()->orderBy('name')->get();
         $this->filterTags = collect();

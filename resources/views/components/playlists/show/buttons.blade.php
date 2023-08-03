@@ -6,7 +6,7 @@
 
 
             @if ($playlist->watchedAt == null)
-                <x-playlists.show.button class=" duratext-green-700 border-green-700 hover:bg-green-800 bg-green-200 shadow-green-500/50 focus:ring-green-300bg-green-700" wire:click="watch()">Ukończ</x-playlists.button>
+                <x-playlists.show.button class=" duratext-green-700 border-green-700 hover:bg-green-800 bg-green-200 shadow-green-500/50 focus:ring-green-300bg-green-700 endbutton" wire:click="watch()">Ukończ</x-playlists.button>
 
                     @if ($playlist->inprogress != true)
                         <x-playlists.show.button class="text-violet-700 border-violet-700 hover:bg-violet-800 bg-violet-200 shadow-violet-500/50 focus:ring-violet-300bg-violet-700" wire:click="setProgress()">W trakcie</x-playlists.button>
