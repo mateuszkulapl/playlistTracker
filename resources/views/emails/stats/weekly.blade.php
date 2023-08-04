@@ -34,7 +34,7 @@
         <tr>
             <td valign="top">
                 <!-- edge wrapper -->
-                <table style="background: #fafafa; margin:20px auto 10px auto; padding:20px 0;" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <table style="border-radius: 4px; border: 2px solid #75b5be; box-shadow: 0px 0px 8px 2px #75b5be; background: #fafafa; margin:20px auto 10px auto; padding:20px 0;" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
                     <tr>
                         <td valign="top">
                             <!-- content wrapper -->
@@ -44,7 +44,7 @@
                                         <table style="" cellpadding="0" cellspacing="0" border="0" align="center">
                                             <tr style="">
                                                 <td style="vertical-align: top;" valign="top" align="center">
-                                                    <h1>Ukończone lekcje<br>{{ $start->isoFormat('DD.MM.YYYY') }} - {{ $end->isoFormat('DD.MM.YYYY') }}</h1>
+                                                    <h1>Ukończone lekcje w ubiegłym tygodniu<br>{{ $start->isoFormat('DD.MM.YYYY') }} - {{ $end->isoFormat('DD.MM.YYYY') }}</h1>
                                                 </td>
                                             </tr>
                                         </table>
@@ -63,7 +63,7 @@
             <tr>
                 <td valign="top">
                     <!-- edge wrapper -->
-                    <table style="background: #fafafa; margin:10px auto 10px auto; padding:20px 0;" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                    <table style="border-radius: 4px; border: 2px solid #75b5be; box-shadow: 0px 0px 8px 2px #75b5be; background: #fafafa; margin:10px auto 10px auto; padding:20px 0;" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
                         <tr>
                             <td valign="top">
                                 <!-- content wrapper -->
@@ -105,7 +105,7 @@
         <tr>
             <td valign="top">
                 <!-- edge wrapper -->
-                <table style="background: #fafafa; margin:10px auto 20px auto; padding:20px 0;" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <table style="border-radius: 4px; border: 2px solid #75b5be; box-shadow: 0px 0px 8px 2px #75b5be; background: #fafafa; margin:10px auto 20px auto; padding:20px 0;" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
                     <tr>
                         <td valign="top">
                             <!-- content wrapper -->
