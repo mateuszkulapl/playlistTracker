@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Controllers\PlaylistController;
-use App\Models\Category;
+use App\Mail\WeeklyStats;
 use App\Models\Playlist;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,16 +22,23 @@ Route::controller(PlaylistController::class)->group(function () {
     Route::post('/', 'index')->name('playlist.index');
 });
 
-// Route::get('/stats', function () {
-
-// $items = Playlist::whereBetween('watchedAt', 
-//                         [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
-//                     )
-//                 ->get();
-  
-//         dd($items);
-// }
-// );
+Route::get(
+    '/stats',
+    function () {
+        $start = Carbon::now()->subWeek()->startOfWeek();
+        $end = Carbon::now()->subWeek()->endOfWeek();
+        $itemsWatchedLastWeek = Playlist::whereBetween('watchedAt', [$start, $end])
+            ->with('category')
+            ->orderBy('watchedAt')
+            ->get();
+        if ($itemsWatchedLastWeek->isNotEmpty()) {
+            $weeklyStats = new WeeklyStats($itemsWatchedLastWeek->toBase(), $start, $end);
+            return $weeklyStats->render();
+        } else {
+            return 'No items watched last week';
+        }
+    }
+);
 // Route::get('/', function () {
 
 // $jsonA =<<<'JSONENDLINE'
