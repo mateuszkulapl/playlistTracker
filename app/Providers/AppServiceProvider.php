@@ -25,5 +25,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Carbon::setLocale('pl_PL');
+        if (env('LOG_QUERIES', false)) {
+            \DB::listen(function ($query) {
+                \Log::info(
+                    $query->sql,
+                    [
+                        'bindings' => $query->bindings,
+                        'time' => $query->time
+                    ]
+                );
+            });
+        }
     }
 }
