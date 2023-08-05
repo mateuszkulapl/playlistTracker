@@ -2,7 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\WeeklyStats;
+use App\Models\Playlist;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class SendWeeklyStats extends Command
 {

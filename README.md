@@ -50,3 +50,6 @@ Playlist Tracker is a web application that helps users keep track of YouTube vid
 9. Start the local development server:
 `php artisan serve`
 Now, you can visit the application at `http://127.0.0.1:8000`.
+
+10. Add cron job to run the scheduler every minute:
+`* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1`

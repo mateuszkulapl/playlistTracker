@@ -17,7 +17,6 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('app:send-weekly-stats')->weeklyOn(1,"8:00");
-        $schedule->command('app:send-weekly-stats')->dailyAt("5:00");//TODO: delete
     }
 
     /**
