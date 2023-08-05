@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,8 +22,14 @@ class WeeklyStats extends Mailable
      */
     public function __construct(public Collection $watchedItems, public Carbon $start, public Carbon $end)
     {
-        $this->watchedGroups = $watchedItems->groupBy('category.name');
+        $categories = collect($watchedItems->pluck('category')->unique());
+        $this->watchedGroups=$categories->transform(function ($item, $key) use ($watchedItems) {
+            $item->watchedElements = $watchedItems->where('category.id', $item->id);
+            return $item;
+            $item->load('watchedPercentage', 'inProgressPercentage');
+        });
         $this->motivationalQuote = $this->getMotivationalQuote();
+
     }
 
     /**

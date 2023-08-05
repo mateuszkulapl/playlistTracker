@@ -59,7 +59,7 @@
             </td>
         </tr>
 
-        @foreach ($watchedGroups as $groupName => $watchedElements)
+        @foreach ($watchedGroups as $category)
             <tr>
                 <td valign="top">
                     <!-- edge wrapper -->
@@ -70,15 +70,21 @@
                                 <table style="background: #fafafa;" cellpadding="0" cellspacing="0" border="0" align="center" width="560">
                                     <tr>
                                         <td style="vertical-align: top;" valign="top">
-                                            <table style="margin-bottom:20px;" cellpadding="0" cellspacing="0" border="0" align="center">
+                                            <table style="margin-bottom:10px;" cellpadding="0" cellspacing="0" border="0" align="center">
                                                 <tr style="">
                                                     <td style="vertical-align: top;" valign="top" align="center">
-                                                        <h2>{{ $groupName }}</h2>
+                                                        <h2>{{ $category->name }}</h2>
                                                     </td>
                                                 </tr>
                                             </table>
+                                            <table style="border:0;margin-bottom:20px;" cellpadding="0" cellspacing="0" width="100%">
+                                                <tr bgcolor="#e5e5e5" style="color:#e5e5e5">
+                                                  <td bgcolor="#16a34a" style="width:{{$category->watchedPercentage()}}%; background-color:#16a34a; float:left; height:15px;"></td>
+                                                  <td bgcolor="#7c3aed" style="width:{{$category->inProgressPercentage()}}%; background-color:#7c3aed; float:left; height:15px;"></td>
+                                                  </tr>
+                                            </table>
                                             <table cellpadding="0" cellspacing="0" border="0" align="left">
-                                                @foreach ($watchedElements as $watchedElement)
+                                                @foreach ($category->watchedElements as $watchedElement)
                                                     <tr>
                                                         <td style="vertical-align: middle;" valign="middle" align="left">
                                                             <img src="{{ $watchedElement->images('default') }}" width="120px">

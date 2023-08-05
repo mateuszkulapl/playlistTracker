@@ -34,15 +34,8 @@ class ShowAwards extends Component
 
     function getPercentages()
     {
-        $playlistsCount = $this->category->playlists()->count();
-        if ($playlistsCount == 0) {
-            $this->percentage = 0;
-            $this->progressPercentage = 0;
-            return;
-        }
-
-        $this->percentage = $this->category->playlists()->whereNotNull('watchedAt')->count() / $playlistsCount * 100;
-        $this->progressPercentage = $this->category->playlists()->whereNull('watchedAt')->where('inprogress', true)->count() / $playlistsCount * 100;
+        $this->percentage = $this->category->watchedPercentage();
+        $this->progressPercentage = $this->category->inProgressPercentage();
     }
     public function changeCategory($id)
     {

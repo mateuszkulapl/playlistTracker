@@ -10,12 +10,6 @@ class Category extends Model
 {
     use HasFactory;
 
-
-    // public function playlists()
-    // {
-    //     return $this->hasMany(Playlist::class);
-    // }
-
     /**
      * Get all of the playlists.
      */
@@ -31,5 +25,25 @@ class Category extends Model
     public function awards(): HasMany
     {
         return $this->hasMany(Award::class);
+    }
+
+    public function watchedPercentage()
+    {
+        $total = $this->playlists()->count();
+        if ($total == 0) {
+            return 0;
+        }
+        $watched = $this->playlists()->whereNotNull('watchedAt')->count();
+        return $watched / $total * 100;
+    }
+
+    public function inProgressPercentage()
+    {
+        $total = $this->playlists()->count();
+        if ($total == 0) {
+            return 0;
+        }
+        $progress = $this->playlists()->whereNull('watchedAt')->where('inprogress', true)->count();
+        return $progress / $total * 100;
     }
 }
