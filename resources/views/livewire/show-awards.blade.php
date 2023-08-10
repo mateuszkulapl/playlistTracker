@@ -2,6 +2,7 @@
 
     <div class="h-5 w-full bg-neutral-200 relative">
         <div class="h-5 bg-green-600 absolute z-20 text-xs font-bold text-white text-center text-shadow" style="width: {{ $percentage }}%">{{ round($percentage, 1) }}%</div>
+
         @if ($progressPercentage > 0)
             <div class="h-5 bg-violet-600 absolute z-10 text-xs font-bold text-white text-center text-shadow" style="width: {{ $progressPercentage }}%; margin-left: {{ $percentage }}%">
                 @if ($progressPercentage > 0.5)
@@ -19,28 +20,8 @@
                     {!! $award->show() !!}
                 </span>
             @endforeach
-
-            {{-- @if ($category->id == 1)
-                <span class="target absolute  {{ $percentage > 30 ? 'bg-green-600' : 'bg-slate-800' }}  text-gray-200 rounded-sm p-1 text-xs transform -translate-x-1/2 -translate-y-full -top-1 z-40 hover:z-50 hover:shadow-md hover:shadow-white 
-        after:absolute after:-bottom-1 after:w-3 after:h-3 after:left-1/2 after:border-1 after:border-inherit after:bg-inherit after:rotate-45 after:-z-10 after:-translate-x-1/2" style="margin-left:30%">
-                    Gofry Tani
-                </span>
-                <span class="target absolute  {{ $percentage > 50 ? 'bg-green-600' : 'bg-slate-800' }}  text-gray-200 rounded-sm p-1 text-xs transform -translate-x-1/2 -translate-y-full -top-1 z-40 hover:z-50 hover:shadow-md hover:shadow-white 
-    after:absolute after:-bottom-1 after:w-3 after:h-3 after:left-1/2 after:border-1 after:border-inherit after:bg-inherit after:rotate-45 after:-z-10 after:-translate-x-1/2" style="margin-left:50%">
-                    <img class="h-8" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Max_%28Restaurant%29_logo.svg/100px-Max_%28Restaurant%29_logo.svg.png" alt="MAX">
-                </span>
-                <span class="target absolute  {{ $percentage > 40 ? 'bg-green-600' : 'bg-slate-800' }}  text-gray-200 rounded-sm p-1 text-xs transform -translate-x-1/2 -translate-y-full -top-1 z-40 hover:z-50 hover:shadow-md hover:shadow-white 
-        after:absolute after:-bottom-1 after:w-3 after:h-3 after:left-1/2 after:border-1 after:border-inherit after:bg-inherit after:rotate-45 after:-z-10 after:-translate-x-1/2" style="margin-left:40%">
-                    Ciacho
-                </span>
-                <span class="target absolute  {{ $percentage > 60 ? 'bg-green-600' : 'bg-slate-800' }}  text-gray-200 rounded-sm p-1 text-xs transform -translate-x-1/2 -translate-y-full -top-1 z-40 hover:z-50 hover:shadow-md hover:shadow-white 
-        after:absolute after:-bottom-1 after:w-3 after:h-3 after:left-1/2 after:border-1 after:border-inherit after:bg-inherit after:rotate-45 after:-z-10 after:-translate-x-1/2" style="margin-left:60%">
-                    Pepsi
-                </span>
-            @endif --}}
         </div>
     </div>
-
 
     <details class="group mt-4 bg-gray-200 px-2">
         <summary class="flex justify-center items-center font-medium cursor-pointer list-none gap-4">
@@ -51,7 +32,6 @@
                 </svg>
             </span>
         </summary>
-
         <div class="flex flex-wrap justify-center">
             <p class="basis-full text-center">Podaj tekst lub url grafiki</p>
             <div class="flex flex-col divide-y ">
@@ -62,8 +42,5 @@
             </div>
         </div>
     </details>
-
-
-
 
 </div>
