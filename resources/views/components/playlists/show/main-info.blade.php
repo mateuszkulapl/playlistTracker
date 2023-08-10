@@ -1,10 +1,10 @@
 @props(['playlist', 'allTags'])
 
 <div class="flex justify-between items-center gap-1 md:gap-2 lg:gap:4 ">
-    <h2 class="text-black font-medium text-lg basis-8/12">{{ $playlist->title }}</h2>
+    <h2 class="text-black font-medium text-lg basis-9/12">{{ $playlist->title }}</h2>
     @if ($playlist->channelTitle)
-        <p class="channel text-right basis-4/12">
-            <span class="border px-1 bg-gray-500 bg-opacity-30 border-gray-200 rounded-sm ">{{ $playlist->channelTitle }}</span>
+        <p class="channel text-right basis-3/12">
+            <span class="border px-1 bg-opacity-30 border-gray-400 rounded-md p-1 mr-2">{{ $playlist->channelTitle }}</span>
         </p>
     @endif
 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Category;
 use App\Models\Playlist;
 use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class IndexPlaylists extends Component
@@ -18,63 +19,31 @@ class IndexPlaylists extends Component
     public $filterTags;
 
     protected $listeners = [
-        'tagCreated' => 'afterTagChanged',
-        'tagDeleted' => 'afterTagChanged',
-        'tagsSelected' => 'filterByTags',
-        'deleted' => 'reindex',
-        'undeleted' => 'reindex',
-        'moved' => '$refresh',
-        'deleted' => '$refresh',
-        'undeleted' => '$refresh',
+        'tagCreated' => 'onTagChange',
+        'tagDeleted' => 'onTagChange',
+        'tagsSelected' => 'onTagsSelect',
+        'deleted' => 'onPlaylistDelete',
+        // 'undeleted' => 'onPlaylistUndelete',
+        'moved' => 'onMove',
     ];
+
 
     public function mount()
     {
-
-        // $ps=Playlist::all();       
-        // foreach ($ps as $key => $playlist) {
-        //     $playlist->categories()->syncWithoutDetaching($playlist->category_id);
-        // }
-
-
-        $this->category = Category::where('id',5)->first();
-        // $this->category = Category::first();
+        $this->category = Category::where('id', 4)->first();
+        // $this->category = Category::first();//TODO: change this to the first category
         $this->categories = Category::all();
-        $this->tags = $this->category->tags()->orderBy('name')->get();
+        $this->updateTags();
         $this->filterTags = collect();
-        $this->getPlaylists();
+        $this->updatePlalists();
     }
 
-    public function refresh()
+    public function render()
     {
-        $this->getPlaylists();
-        $this->categories = Category::all();
-        $this->tags = $this->category->tags()->orderBy('name')->get();
-        //$this->reindex(); //todo: delete this
+        return view('livewire.index-playlists');
     }
 
-    public function afterTagCreated()
-    {
-        $this->tags = $this->category->tags()->orderBy('name')->get();
-        $this->getPlaylists();
-    }
-
-    public function afterTagChanged()
-    {
-        $this->tags = $this->category->tags()->orderBy('name')->get();
-        $this->getPlaylists();
-    }
-
-    public function filterByCategory($id)
-    {
-        $this->filterTags = collect();
-        $this->category = Category::find($id);
-        $this->refresh();
-
-        $this->emit('categoryselected', $this->category->id);
-    }
-
-    public function getPlaylists()
+    public function updatePlalists()
     {
         $filterTags = $this->filterTags;
         if ($filterTags->count() > 0) {
@@ -83,38 +52,63 @@ class IndexPlaylists extends Component
             })->orderBy('order')->get();
         } else {
             $this->playlists = $this->category->playlists()->with('tags')->orderBy('order')->get();
+            $this->updateOrderIfNecessary();//TODO: delete
         }
     }
-    public function moved()
+    public function updateTags()
     {
-        $this->getPlaylists();
+        $this->tags = $this->category->tags()->orderBy('name')->get();
     }
 
-    public function reindex()
+    public function updateOrderIfNecessary()
     {
-        $i = 1;
-        foreach ($this->playlists as $key => $playlist) {
-            if ($playlist->order != $i) {
-                $playlist->order = $i;
+        $this->playlists->each(function ($playlist, $key) {
+            if ($playlist->order != $key + 1) {
+                $playlist->order = $key + 1;
                 $playlist->save();
             }
-            $i++;
-        }
+        });
     }
-
-    public function render()
+    
+    public function filterByCategory($id)
     {
-        return view('livewire.index-playlists');
+        $this->filterTags = collect();
+        $this->category = Category::find($id);
+        $this->updatePlalists();
+        $this->updateTags();
+        $this->emit('categoryselected', $this->category->id);
     }
 
+    public function onTagChange()
+    {
+        $this->tags = $this->category->tags()->orderBy('name')->get();
+        $this->updatePlalists();
+    }
 
+    public function onMove()
+    {
+        $this->updatePlalists();
+    }
 
-    public function filterByTags($tags)
+    public function onTagsSelect($tags)
     {
         $this->filterTags = collect();
         foreach ($tags as $tag_id) {
             $this->filterTags->push($tag_id);
         }
-        $this->refresh();
+        $this->updatePlalists();
+    }
+
+    public function onPlaylistDelete($id, $order)
+    {
+        DB::table('playlists')->where('order', '>', $order)->where('category_id', $this->category->id)->decrement('order');
+        Playlist::all()->where('category_id', $this->category->id)->where('id', $id)->first()->delete();
+        $this->playlists = $this->playlists->reject(function ($playlist) use ($id) {
+            return $playlist->id == $id;
+        });
+        //do the same for the playlists to not run additional queries
+        $this->playlists->where('order', '>', $order)->each(function ($playlist) {
+            $playlist->order--;
+        });
     }
 }
