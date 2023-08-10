@@ -30,8 +30,7 @@ class IndexPlaylists extends Component
 
     public function mount()
     {
-        $this->category = Category::where('id', 1)->first();
-        // $this->category = Category::first();//TODO: change this to the first category
+        $this->category = Category::latest()->first();
         $this->categories = Category::all();
         $this->updateTags();
         $this->filterTags = collect();
@@ -52,7 +51,7 @@ class IndexPlaylists extends Component
             })->orderBy('order')->get();
         } else {
             $this->playlists = $this->category->playlists()->with('tags')->orderBy('order')->get();
-            $this->updateOrderIfNecessary();//TODO: delete
+            $this->updateOrderIfNecessary(); //TODO: delete
         }
     }
     public function updateTags()
@@ -69,7 +68,7 @@ class IndexPlaylists extends Component
             }
         });
     }
-    
+
     public function filterByCategory($id)
     {
         $this->filterTags = collect();
