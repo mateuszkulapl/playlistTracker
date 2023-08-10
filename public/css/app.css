@@ -702,6 +702,9 @@ video {
 .h-3 {
   height: 0.75rem;
 }
+.max-h-8 {
+  max-height: 2rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }

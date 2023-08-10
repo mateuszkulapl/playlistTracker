@@ -30,7 +30,7 @@ class IndexPlaylists extends Component
 
     public function mount()
     {
-        $this->category = Category::where('id', 4)->first();
+        $this->category = Category::where('id', 1)->first();
         // $this->category = Category::first();//TODO: change this to the first category
         $this->categories = Category::all();
         $this->updateTags();
