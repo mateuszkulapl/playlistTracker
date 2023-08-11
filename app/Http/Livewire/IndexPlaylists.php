@@ -23,7 +23,7 @@ class IndexPlaylists extends Component
         'tagDeleted' => 'onTagChange',
         'tagsSelected' => 'onTagsSelect',
         'deleted' => 'onPlaylistDelete',
-        // 'undeleted' => 'onPlaylistUndelete',
+        'undeleted' => 'onPlaylistUndelete',
         'moved' => 'onMove',
     ];
 
@@ -101,7 +101,6 @@ class IndexPlaylists extends Component
     public function onPlaylistDelete($id, $order)
     {
         DB::table('playlists')->where('order', '>', $order)->where('category_id', $this->category->id)->decrement('order');
-        Playlist::all()->where('category_id', $this->category->id)->where('id', $id)->first()->delete();
         $this->playlists = $this->playlists->reject(function ($playlist) use ($id) {
             return $playlist->id == $id;
         });
@@ -109,5 +108,10 @@ class IndexPlaylists extends Component
         $this->playlists->where('order', '>', $order)->each(function ($playlist) {
             $playlist->order--;
         });
+    }
+
+    public function onPlaylistUndelete()
+    {
+        $this->updatePlalists();
     }
 }

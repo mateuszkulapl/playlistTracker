@@ -164,4 +164,15 @@ class Playlist extends Model
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
+
+    public function restoreAtEnd()
+    {
+        $this->restore();
+        $this->moveToLast();
+    }
+    public function moveToLast()
+    {
+        $this->order = $this->category->playlists()->max('order') + 1;
+        $this->save();
+    }
 }

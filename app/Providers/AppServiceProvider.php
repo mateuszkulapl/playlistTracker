@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Carbon::setLocale('pl_PL');
+        Carbon::setLocale(env('CARBON_LOCALE', 'en'));
         if (env('LOG_QUERIES', false)) {
             \DB::listen(function ($query) {
                 \Log::info(

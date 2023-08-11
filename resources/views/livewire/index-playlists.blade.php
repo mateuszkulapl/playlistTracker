@@ -9,10 +9,10 @@
     @livewire('show-tags', ['category' => $category])
     @livewire('tag-form', ['category' => $category])
 
-    <div class="grid gap-4 gap-y-4">
+    <div class="grid gap-4 gap-y-4 my-4">
         @foreach ($playlists as $key => $playlist)
             @livewire('show-element', ['playlist' => $playlist, 'allTags' => $tags, 'playlistsCount' => $playlists->count()], key(time() . $playlist->id))
         @endforeach
     </div>
-    <span class="bg bg-green-300 border-green-800"></span>
+    @livewire('deleted-playlists', ['category' => $category])
 </div>

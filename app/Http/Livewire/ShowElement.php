@@ -78,7 +78,7 @@ class ShowElement extends Component
     {
         $this->playlist->delete();
         $this->emit('deleted', $this->playlist->id, $this->playlist->order);
-        $this->emit('toast', 'Deleted: "'.$this->playlist->title.'"');
+        $this->emit('toast', 'Usunięto: "' . $this->playlist->title . '"');
     }
     public function undelete()
     {
