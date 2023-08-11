@@ -2,19 +2,22 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Category;
 use App\Models\Playlist;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class DeletedPlaylists extends Component
 {
-    public $playlists;
-    public $category;
-    public $open = false;
-    public $loaded = false;
+    public Collection $playlists;
+    public Category $category;
+    public bool $open = false;
+    public bool $loaded = false;
 
 
     protected $listeners = [
         'deleted' => 'onPlaylistDelete',
+        'categorySelected' => 'onCategoryChange',
     ];
 
 
@@ -54,6 +57,12 @@ class DeletedPlaylists extends Component
 
     public function onPlaylistDelete()
     {
+        $this->updatePlaylists();
+    }
+    public function onCategoryChange($categoryId)
+    {
+        $this->open = false;
+        $this->category = Category::find($categoryId);
         $this->updatePlaylists();
     }
 

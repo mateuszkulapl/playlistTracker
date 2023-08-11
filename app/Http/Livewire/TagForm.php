@@ -11,7 +11,7 @@ class TagForm extends Component
     public $name;
     public $category_id;
 
-    protected $listeners = ['categoryselected' => 'categoryselected'];
+    protected $listeners = ['categorySelected' => 'categoryselected'];
     protected $rules = [
         'name' => 'required|string|min:3|max:50|unique:tags,name',
         'category_id' => 'required'

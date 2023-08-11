@@ -13,7 +13,7 @@ class ShowTags extends Component
     public $selectedTags = [];
 
 
-    protected $listeners = ['tagCreated' => 'refresh', 'categoryselected' => 'categoryselected', 'tagDeleted' => 'refresh'];
+    protected $listeners = ['tagCreated' => 'refresh', 'categorySelected' => 'categoryselected', 'tagDeleted' => 'refresh'];
 
     public function mount($category)
     {

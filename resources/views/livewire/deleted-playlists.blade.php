@@ -7,7 +7,7 @@
             </svg>
         </span>
     </div>
-    <div id="deleted-list" @class(['block', 'hidden' => $this->open == false])>
+    <div id="deleted-list" @class(['block', 'hidden' => $this->open == false]) wire:loading.class="opacity-50 pointer-events-none">
         @if (!$this->playlists->isEmpty())
             <table class="w-full">
                 <thead>

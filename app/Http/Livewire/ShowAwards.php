@@ -19,7 +19,7 @@ class ShowAwards extends Component
         'unprogressed' => 'getPercentages',
         'deleted' => 'getPercentages',
         'undeleted' => 'getPercentages',
-        'categoryselected' => 'changeCategory',
+        'categorySelected' => 'changeCategory',
         'awardsupdated' => 'getAwards',
 
     ];

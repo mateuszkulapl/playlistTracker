@@ -75,7 +75,7 @@ class IndexPlaylists extends Component
         $this->category = Category::find($id);
         $this->updatePlalists();
         $this->updateTags();
-        $this->emit('categoryselected', $this->category->id);
+        $this->emit('categorySelected', $this->category->id);
     }
 
     public function onTagChange()
