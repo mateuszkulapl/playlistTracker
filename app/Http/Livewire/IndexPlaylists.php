@@ -17,6 +17,7 @@ class IndexPlaylists extends Component
     public $categories;
     public $tags;
     public $filterTags;
+    public $loaded;
 
     protected $listeners = [
         'tagCreated' => 'onTagChange',
@@ -34,7 +35,14 @@ class IndexPlaylists extends Component
         $this->category = $this->categories->last();
         $this->updateTags();
         $this->filterTags = collect();
+        $this->playlists= collect();
+        $this->loaded = false;
+    }
+
+    public function loadPlaylists()
+    {
         $this->updatePlalists();
+        $this->loaded = true;
     }
 
     public function render()
