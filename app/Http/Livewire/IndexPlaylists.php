@@ -44,15 +44,9 @@ class IndexPlaylists extends Component
 
     public function updatePlalists()
     {
-        $filterTags = $this->filterTags;
-        if ($filterTags->count() > 0) {
-            $this->playlists = $this->category->playlists()->with('tags')->whereHas('tags', function ($query) use ($filterTags) {
-                $query->whereIn('id', $filterTags);
-            })->orderBy('order')->get();
-        } else {
-            $this->playlists = $this->category->playlists()->with('tags')->orderBy('order')->get();
-            $this->updateOrderIfNecessary(); //TODO: delete
-        }
+        $playlistQuery = $this->category->playlists()->with('tags');
+        $playlistQuery= $this->appendTagsQueryIfNecessary($playlistQuery);
+        $this->playlists = $playlistQuery->orderBy('order')->get();
     }
     public function updateTags()
     {
@@ -126,17 +120,21 @@ class IndexPlaylists extends Component
     public function onPlaylistUndelete($playlistId)
     {
         $playlistQuery = Playlist::where('id', $playlistId)->where('category_id', $this->category->id);
-        
-        $filterTags=$this->filterTags;
-        if ($filterTags->count() > 0) {
-            $playlistQuery=$playlistQuery->whereHas('tags', function ($query) use ($filterTags) {
-                $query->whereIn('id', $filterTags);
-            }
-        );
-        }
+        $playlistQuery = $this->appendTagsQueryIfNecessary($playlistQuery);
         $playlist = $playlistQuery->with('tags')->first();
         if ($playlist) {
             $this->playlists->push($playlist);
         };
+    }
+
+    private function appendTagsQueryIfNecessary($query)
+    {
+        $filterTags = $this->filterTags;
+        if ($filterTags->count() > 0) {
+            $query->whereHas('tags', function ($query) use ($filterTags) {
+                $query->whereIn('id', $filterTags);
+            });
+        }
+        return $query;
     }
 }
