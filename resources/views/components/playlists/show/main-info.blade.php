@@ -4,7 +4,7 @@
     <h2 class="text-black font-medium text-lg basis-8/12">{{ $playlist->title }}</h2>
     @if ($playlist->channelTitle)
         <p class="channel text-right basis-4/12">
-            <span class="border px-1 bg-opacity-30 border-gray-400 rounded-md p-1 mr-2 inline-block">{{ $playlist->channelTitle }}</span>
+            <span class="border px-1 border-gray-400 rounded-md p-1 mr-2 inline-block text-sm">{{ $playlist->channelTitle }}</span>
         </p>
     @endif
 </div>
