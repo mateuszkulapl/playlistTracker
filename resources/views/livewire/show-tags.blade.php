@@ -8,7 +8,7 @@
             <span class="cursor-pointer"
             wire:click="toggleSelect('{{ $tag->id }}')"> {{ $tag->name }}</span>
 
-            <span class="delete bg-red-900 text-slate-50 pl-1 pr-1 ml-1 cursor-pointer"
+            <span class="delete bg-red-900 text-slate-50 pl-1 pr-1 ml-1 cursor-pointer inline-block"
             wire:click="delete('{{ $tag->id }}')"
             >usuń</span>
         </span>
