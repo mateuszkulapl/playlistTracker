@@ -37,15 +37,26 @@ class DeletedPlaylists extends Component
         $this->updatePlaylists();
         $this->loaded = true;
     }
-
-    public function toggleOpen()
+    public function open()
     {
-        $this->open = !$this->open;
+        $this->open = true;
         //load playlist after first open
         if (!$this->loaded) {
             $this->loadPlaylists();
         }
     }
+    public function close()
+    {
+        $this->open = false;
+    }
+    // public function toggleOpen()
+    // {
+    //     $this->open = !$this->open;
+    //     //load playlist after first open
+    //     if (!$this->loaded) {
+    //         $this->loadPlaylists();
+    //     }
+    // }
     public function restorePlaylist($playlistId)
     {
         $playlist = Playlist::onlyTrashed()->find($playlistId);
