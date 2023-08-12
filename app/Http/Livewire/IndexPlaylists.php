@@ -30,8 +30,8 @@ class IndexPlaylists extends Component
 
     public function mount()
     {
-        $this->category = Category::latest()->first();
-        $this->categories = Category::all();
+        $this->categories = Category::oldest()->get();
+        $this->category = $this->categories->last();
         $this->updateTags();
         $this->filterTags = collect();
         $this->updatePlalists();

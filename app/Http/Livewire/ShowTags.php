@@ -15,10 +15,10 @@ class ShowTags extends Component
 
     protected $listeners = ['tagCreated' => 'refresh', 'categorySelected' => 'categoryselected', 'tagDeleted' => 'refresh'];
 
-    public function mount($category)
+    public function mount($category, $tags)
     {
         $this->category = $category;
-        $this->tags = $category->tags()->orderBy('name')->get();
+        $this->tags = $tags;
     }
 
     public function render()

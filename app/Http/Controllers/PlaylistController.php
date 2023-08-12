@@ -17,19 +17,9 @@ class PlaylistController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        if (request()->input('login') != null && request()->input('login') === env('login')) {
-            return view(
-                'playlist.index',
-                ['categories' => $categories]
-            );
-        } else {
-            return view(
-                'playlist.index',
-                ['categories' => $categories]
-                //'playlist.login'
-            );
-        }
+        return view(
+            'playlist.index'
+        );
     }
 
     /**

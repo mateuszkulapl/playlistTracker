@@ -34,7 +34,7 @@ class ShowAwards extends Component
 
     function getPercentages()
     {
-        $this->percentage = $this->category->watchedPercentage();
+        $this->percentage = $this->category->watchedPercentage(true);
         $this->progressPercentage = $this->category->inProgressPercentage();
     }
     public function changeCategory($id)

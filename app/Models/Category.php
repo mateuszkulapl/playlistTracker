@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     use HasFactory;
+    private $playlistCount = null;
 
     /**
      * Get all of the playlists.
@@ -27,9 +28,17 @@ class Category extends Model
         return $this->hasMany(Award::class);
     }
 
-    public function watchedPercentage()
+    public function updatePlaylistCount()
     {
-        $total = $this->playlists()->count();
+        $this->playlistCount = $this->playlists()->count();
+    }
+
+    public function watchedPercentage($updateTotal = false)
+    {
+        if ($this->playlistCount == null || $updateTotal) {
+            $this->updatePlaylistCount();
+        }
+        $total = $this->playlistCount;
         if ($total == 0) {
             return 0;
         }
@@ -37,9 +46,12 @@ class Category extends Model
         return $watched / $total * 100;
     }
 
-    public function inProgressPercentage()
+    public function inProgressPercentage($updateTotal = false)
     {
-        $total = $this->playlists()->count();
+        if ($this->playlistCount == null || $updateTotal) {
+            $this->updatePlaylistCount();
+        }
+        $total = $this->playlistCount;
         if ($total == 0) {
             return 0;
         }

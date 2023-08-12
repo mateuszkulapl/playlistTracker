@@ -6,7 +6,7 @@
     </div>
 
     @livewire('show-awards', ['category' => $category, 'percentage' => $percentage, 'progressPercentage' => $progressPercentage])
-    @livewire('show-tags', ['category' => $category])
+    @livewire('show-tags', ['category' => $category, 'tags' => $tags])
     @livewire('tag-form', ['category' => $category])
 
     <div class="grid gap-4 gap-y-4 my-4">
