@@ -98,6 +98,13 @@ class IndexPlaylists extends Component
         $this->updatePlalists();
     }
 
+    /**
+     * On playlist delete remove playlist from the list of playlists, decrement order of all playlists with higher order in database and in the list
+     *
+     * @param string $id
+     * @param int $order
+     * @return void
+     */
     public function onPlaylistDelete($id, $order)
     {
         DB::table('playlists')->where('order', '>', $order)->where('category_id', $this->category->id)->decrement('order');
@@ -110,8 +117,26 @@ class IndexPlaylists extends Component
         });
     }
 
-    public function onPlaylistUndelete()
+    /**
+     * On playlist undelete add playlist to the list of playlists at the end
+     *
+     * @param string $playlistId
+     * @return void
+     */
+    public function onPlaylistUndelete($playlistId)
     {
-        $this->updatePlalists();
+        $playlistQuery = Playlist::where('id', $playlistId)->where('category_id', $this->category->id);
+        
+        $filterTags=$this->filterTags;
+        if ($filterTags->count() > 0) {
+            $playlistQuery=$playlistQuery->whereHas('tags', function ($query) use ($filterTags) {
+                $query->whereIn('id', $filterTags);
+            }
+        );
+        }
+        $playlist = $playlistQuery->with('tags')->first();
+        if ($playlist) {
+            $this->playlists->push($playlist);
+        };
     }
 }

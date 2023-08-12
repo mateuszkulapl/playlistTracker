@@ -80,11 +80,6 @@ class ShowElement extends Component
         $this->emit('deleted', $this->playlist->id, $this->playlist->order);
         $this->emit('toast', 'Usunięto: "' . $this->playlist->title . '"');
     }
-    public function undelete()
-    {
-        $this->playlist->undelete();
-        $this->emit('undeleted');
-    }
 
     public function moveUp()
     {
