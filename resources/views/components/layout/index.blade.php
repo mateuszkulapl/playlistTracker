@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name') }}</title>
+    @env('local')
+    <script src="https://cdn.jsdelivr.net/gh/underground-works/clockwork-browser@1/dist/toolbar.js"></script>
+    @endenv
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <script src="{{ mix('js/app.js') }}" defer></script>
     <link href="/favicon.ico" rel="stylesheet">
@@ -20,7 +23,7 @@
         {{-- <audio class="hidden" id="cheer" controls autoplay>
             <source class="hidden" src="cheer.mp3" type="audio/mpeg">
         </audio> --}}
-        <x-layout.toasts/>
+        <x-layout.toasts />
     </x-layout.main>
     <x-layout.footer class="">
         <p>&copy; {{ config('app.name') }}</p>
