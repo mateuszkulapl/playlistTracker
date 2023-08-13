@@ -26,6 +26,7 @@ class IndexPlaylists extends Component
         'deleted' => 'onPlaylistDelete',
         'undeleted' => 'onPlaylistUndelete',
         'moved' => 'onMove',
+        'playlistCreated' => 'onPlaylistCreate'
     ];
 
 
@@ -35,7 +36,7 @@ class IndexPlaylists extends Component
         $this->category = $this->categories->last();
         $this->updateTags();
         $this->filterTags = collect();
-        $this->playlists= collect();
+        $this->playlists = collect();
         $this->loaded = false;
     }
 
@@ -53,7 +54,7 @@ class IndexPlaylists extends Component
     public function updatePlalists()
     {
         $playlistQuery = $this->category->playlists()->with('tags');
-        $playlistQuery= $this->appendTagsQueryIfNecessary($playlistQuery);
+        $playlistQuery = $this->appendTagsQueryIfNecessary($playlistQuery);
         $this->playlists = $playlistQuery->orderBy('order')->get();
     }
     public function updateTags()
@@ -126,6 +127,16 @@ class IndexPlaylists extends Component
      * @return void
      */
     public function onPlaylistUndelete($playlistId)
+    {
+        $this->onNewPlaylist($playlistId);
+    }
+
+    public function onPlaylistCreate($playlistId)
+    {
+        $this->onNewPlaylist($playlistId);
+    }
+
+    public function onNewPlaylist($playlistId)
     {
         $playlistQuery = Playlist::where('id', $playlistId)->where('category_id', $this->category->id);
         $playlistQuery = $this->appendTagsQueryIfNecessary($playlistQuery);

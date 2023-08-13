@@ -39,4 +39,5 @@
     </div>
 
     @livewire('deleted-playlists', ['category' => $category])
+    @livewire('import-form', ['category' => $category])
 </div>
