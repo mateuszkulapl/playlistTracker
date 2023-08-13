@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,20 +33,6 @@ class Playlist extends Model
         'watchedAt' => 'datetime:Y-m-d H:i:s',
     ];
 
-
-
-    /**
-     * Get the element's duration.
-     *
-     * @param  int  $value
-     * @return CarbonInterval
-     */
-    public function getDurationAttribute($value)
-    {
-        return CarbonInterval::create(0)->seconds($value)->cascade();
-    }
-
-
     /**
      * Get the element's duration formatted.
      *
@@ -64,35 +49,15 @@ class Playlist extends Model
     }
 
     /**
-     * Set the element's duration.
-     *
-     * @param  CarbonInterval  $value
-     * @return void
+     * Interact with the element's duration.
      */
-    public function setDurationAttribute($value)
+    protected function duration(): Attribute
     {
-        $this->attributes['duration'] = $value->totalSeconds;
+        return Attribute::make(
+            get: fn (int|null $value) => CarbonInterval::create(0)->seconds($value)->cascade(),
+            set: fn (CarbonInterval $value) => $value->totalSeconds
+        );
     }
-    // /**
-    //  * Get the element's duration.
-    //  */
-    // protected function duration(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn (int $value) => CarbonInterval::createFromFormat('%sS', $this->duration)
-    //     );
-    // }
-
-    // /**
-    //  * Interact with the element's duration.
-    //  */
-    // protected function duration(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn (string $value) => ucfirst($value),
-    //         set: fn (string $value) => strtolower($value),
-    //     );
-    // }
 
     public function images($size = 'medium')
     {
@@ -114,23 +79,12 @@ class Playlist extends Model
         $this->watchedAt = null;
         $this->save();
     }
-    // public function delete()
-    // {
-    //     $this->deletedAt=now();
-    //     $this->save();
-    // }
-    // public function undelete()
-    // {
-    //     $this->deletedAt=null;
-    //     $this->save();
-    // }
+
     public function moveBy($offset)
     {
         $this->order = $this->order + $offset;
         $this->save();
     }
-
-
 
     public function getLink()
     {
