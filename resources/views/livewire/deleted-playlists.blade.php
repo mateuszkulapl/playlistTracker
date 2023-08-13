@@ -1,4 +1,4 @@
-<div class="border-2 border-gray-200 shadow-md flex flex-col group bg-neutral-50">
+<div class="border-2 border-gray-200 shadow-md flex flex-col group bg-neutral-50 my-4">
     <div class="text-lg py-2 px-2 flex flex-row align-bottom justify-center cursor-pointer" @if ($this->open) wire:click="close"
     @else
     wire:click="open" @endif>
