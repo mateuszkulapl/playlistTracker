@@ -14,7 +14,6 @@ class AddRatingToPlaylistsTable extends Migration
     public function up()
     {
         Schema::table('playlists', function (Blueprint $table) {
-            $table->dropColumn('rate');
             $table->integer('rating')->nullable();
         });
     }
@@ -27,7 +26,7 @@ class AddRatingToPlaylistsTable extends Migration
     public function down()
     {
         Schema::table('playlists', function (Blueprint $table) {
-            $table->dropColumn('rate');
+            $table->dropColumn('rating');
         });
     }
 }
