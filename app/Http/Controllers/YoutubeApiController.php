@@ -7,6 +7,7 @@ use Carbon\CarbonInterval;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class YoutubeApiController extends Controller
 {
@@ -60,7 +61,7 @@ class YoutubeApiController extends Controller
             $apiVideo = $apiData->firstWhere('id', $video->id);
             if ($apiVideo) {
                 $video->title = $apiVideo->snippet->title;
-                $video->description = $apiVideo->snippet->description;
+                $video->description = Str::limit($apiVideo->snippet->description,3000,"");
                 $video->thumbnails = json_encode($apiVideo->snippet->thumbnails);
                 $video->duration = CarbonInterval::make($apiVideo->contentDetails->duration);
                 $video->publishedAt = Carbon::parse($apiVideo->snippet->publishedAt);
