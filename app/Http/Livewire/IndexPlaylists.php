@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Category;
 use App\Models\Playlist;
-use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -18,6 +17,8 @@ class IndexPlaylists extends Component
     public $tags;
     public $filterTags;
     public $loaded;
+    public $showCategoryForm = false;
+    public $newCategoryName;
 
     protected $listeners = [
         'tagCreated' => 'onTagChange',
@@ -38,6 +39,7 @@ class IndexPlaylists extends Component
         $this->filterTags = collect();
         $this->playlists = collect();
         $this->loaded = false;
+        $this->newCategoryName = '';
     }
 
     public function loadPlaylists()
@@ -53,13 +55,20 @@ class IndexPlaylists extends Component
 
     public function updatePlalists()
     {
+        if (!$this->category) {
+            $this->playlists = collect();
+            return;
+        }
         $playlistQuery = $this->category->playlists()->with('tags');
         $playlistQuery = $this->appendTagsQueryIfNecessary($playlistQuery);
         $this->playlists = $playlistQuery->orderBy('order')->get();
     }
     public function updateTags()
     {
-        $this->tags = $this->category->tags()->orderBy('name')->get();
+        if ($this->category)
+            $this->tags = $this->category->tags()->orderBy('name')->get();
+        else
+            $this->tags = collect();
     }
 
     public function updateOrderIfNecessary()
@@ -155,5 +164,24 @@ class IndexPlaylists extends Component
             });
         }
         return $query;
+    }
+    public function showCategoryForm()
+    {
+        $this->showCategoryForm = true;
+    }
+    public function addCategory()
+    {
+        $this->validate([
+            'newCategoryName' => 'required|unique:categories,name'
+        ]);
+        $category = Category::create([
+            'name' => $this->newCategoryName
+        ]);
+        $this->categories->push($category);
+        $this->showCategoryForm = false;
+        $this->newCategoryName = '';
+        if (!$this->category) {
+            $this->filterByCategory($category->id);
+        }
     }
 }

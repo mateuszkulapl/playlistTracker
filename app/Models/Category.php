@@ -11,6 +11,7 @@ class Category extends Model
     use HasFactory;
     private $playlistCount = null;
 
+    protected $fillable = ['name'];
     /**
      * Get all of the playlists.
      */
