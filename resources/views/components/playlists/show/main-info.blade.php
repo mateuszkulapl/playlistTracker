@@ -19,11 +19,9 @@
     @endif
     <div class="flex flex-wrap items-center justify-start gap-1 md:gap-2">
         <x-playlists.show.difficulty :difficulty="$playlist->difficulty" :id="$playlist->id" />
-        @if ($playlist->category_id != 1)
-            <div class="rating">
-                <x-playlists.show.rating :rating="$playlist->rating" :id="$playlist->id" />
-            </div>
-        @endif
+        <div class="rating">
+            <x-playlists.show.rating :rating="$playlist->rating" :id="$playlist->id" />
+        </div>
         <x-playlists.show.tags :id="$playlist->id" :tags="$playlist->tags" :allTags="$allTags" />
     </div>
 </div>
