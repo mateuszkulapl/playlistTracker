@@ -8,7 +8,7 @@
             @enderror
         </div>
         <div class="flex flex-col">
-            <input class="py-1 px-1 lg:px-2 w-24 border border-gray-300 rounded-sm text-sm focus:border-blue-500 focus:ring-blue-500" type="number" step="1" placeholder="Procent" wire:model="percentage" wire:loading.attr="disabled" wire:target="submit">
+            <input class="py-1 px-1 lg:px-2 w-24 border border-gray-300 rounded-sm text-sm focus:border-blue-500 focus:ring-blue-500" type="number" step="0.01" placeholder="Procent" wire:model="percentage" wire:loading.attr="disabled" wire:target="submit">
             @error('percentage')
                 <span class="text-red-400">{{ $message }}</span>
             @enderror

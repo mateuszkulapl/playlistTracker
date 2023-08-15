@@ -15,7 +15,7 @@ class EditAward extends Component
 
     protected $rules = [
         'name' => 'required|min:1|max:255',
-        'percentage' => 'required|numeric|min:0|max:100',
+        'percentage' => 'required|decimal:0,2|min:0|max:100',
     ];
     protected $listeners = [
 
