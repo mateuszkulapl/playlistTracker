@@ -1,15 +1,14 @@
 <div style="order:{{ $playlist->order }}" @class([
-    'shadow-md flex flex-col
-    hover:-m-2
-    hover:z-10
-    duration-100
-    group 
-    relative
-    ',
+    'shadow-md flex flex-col',
+    'hover:-m-2',
+    'hover:z-10',
+    'duration-100',
+    'group',
+    'relative',
 ])>
     <div @class([
-        'hover:p-2 duration-100
-        border-2 border-gray-200',
+        'hover:p-2 duration-100',
+        'border-2 border-gray-200',
         'watched bg bg-green-200 border-green-800' => $playlist->watchedAt != null,
         'watched bg bg-violet-200 border-violet-800' =>
             $playlist->inprogress == true && $playlist->watchedAt == null,

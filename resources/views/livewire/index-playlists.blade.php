@@ -15,9 +15,9 @@
                         @livewire('show-element', ['playlist' => $playlist, 'allTags' => $tags, 'playlistsCount' => $playlists->max('order')], key(time() . $playlist->id))
                     @empty
                         <div class="shadow-md flex flex-col group border-2 border-gray-200 bg-neutral-50 py-2 px-2 ">
-                            <p class="text-center text-xl mb-4">Brak elementów</p>
+                            <p class="text-center text-xl mx-2 my-2">Brak elementów</p>
                             @if ($category == null)
-                                <p class="text-center  my-2">
+                                <p class="text-center my-2">
                                     <span class="bg-emerald-300 text-emerald-900 hover:bg-emerald-400 font-bold border border-green-900 px-2 py-1 cursor-pointer shadow-sm rounded-md" wire:click="showCategoryForm()">Dodaj pierwszą kategorię</span>
                                 </p>
                             @endif
