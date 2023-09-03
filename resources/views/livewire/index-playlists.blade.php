@@ -12,7 +12,7 @@
             <div class="w-full" wire:loading.remove wire:target="filterByCategory">
                 <div class="grid gap-4">
                     @forelse ($playlists as $playlist)
-                        @livewire('show-element', ['playlist' => $playlist, 'allTags' => $tags, 'playlistsCount' => $playlists->max('order')], key(time() . $playlist->id))
+                        @livewire('show-element', ['playlist' => $playlist, 'allTags' => $tags, 'allCategories' => $categories, 'playlistsCount' => $playlists->max('order')], key(time() . $playlist->id))
                     @empty
                         <div class="shadow-md flex flex-col group border-2 border-gray-200 bg-neutral-50 py-2 px-2 ">
                             <p class="text-center text-xl mx-2 my-2">Brak elementów</p>

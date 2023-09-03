@@ -25,7 +25,7 @@
                 <span></span>
             </div>
             <div class="basis-6/12 lg:basis-7/12 py-1 pl-2">
-                <x-playlists.show.main-info :playlist="$playlist" :allTags="$allTags" />
+                <x-playlists.show.main-info :playlist="$playlist" :allTags="$allTags" :allCategories="$allCategories" />
             </div>
 
             <div class=" flex basis-5/12 lg:basis-4/12 justify-between gap-2 flex-col-reverse sm:flex-row">
