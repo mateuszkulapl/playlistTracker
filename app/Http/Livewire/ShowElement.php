@@ -10,6 +10,7 @@ class ShowElement extends Component
     public $playlist;
     public $playlistsCount;
     public $allTags;
+    public $allCategories;
 
     protected $listeners = [];
 
@@ -116,5 +117,14 @@ class ShowElement extends Component
         $this->playlist->order = $targetNumber;
         $this->playlist->save();
         $this->emit('moved');
+    }
+
+    public function changeElementCategory($new_category_id)
+    {
+        $oldCategoryOrder=$this->playlist->order;
+        $this->playlist->category_id = $new_category_id;
+        $this->playlist->order = 1 + Playlist::where('category_id', $new_category_id)->max('order');
+        $this->playlist->save();
+        $this->emit('changedElementCategory', $this->playlist->id,$oldCategoryOrder);
     }
 }

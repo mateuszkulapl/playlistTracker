@@ -27,7 +27,8 @@ class IndexPlaylists extends Component
         'deleted' => 'onPlaylistDelete',
         'undeleted' => 'onPlaylistUndelete',
         'moved' => 'onMove',
-        'playlistCreated' => 'onPlaylistCreate'
+        'playlistCreated' => 'onPlaylistCreate',
+        'changedElementCategory' => 'onChangedElementCategory'
     ];
 
 
@@ -184,4 +185,25 @@ class IndexPlaylists extends Component
             $this->filterByCategory($category->id);
         }
     }
+
+
+    /**
+     * 
+     *
+     * @param string $id
+     * @param int $order
+     * @return void
+     */
+    public function onChangedElementCategory($id,$order)
+    {
+        DB::table('playlists')->where('order', '>', $order)->where('category_id', $this->category->id)->decrement('order');
+        $this->playlists = $this->playlists->reject(function ($playlist) use ($id) {
+            return $playlist->id == $id;
+        });
+        //do the same for the playlists to not run additional queries
+        $this->playlists->where('order', '>', $order)->each(function ($playlist) {
+            $playlist->order--;
+        });
+    }
+
 }

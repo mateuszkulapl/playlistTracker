@@ -1,4 +1,4 @@
-@props(['playlist', 'allTags'])
+@props(['playlist', 'allTags', 'allCategories'])
 
 <div class="flex justify-between items-center gap-1 md:gap-2 lg:gap:4 ">
     <h2 class="text-black font-medium text-lg basis-8/12">{{ $playlist->title }}</h2>
@@ -23,5 +23,6 @@
             <x-playlists.show.rating :rating="$playlist->rating" :id="$playlist->id" />
         </div>
         <x-playlists.show.tags :id="$playlist->id" :tags="$playlist->tags" :allTags="$allTags" />
+        <x-playlists.show.change-category :id="$playlist->id" :category="$playlist->category" :allCategories="$allCategories" />
     </div>
 </div>
