@@ -60,7 +60,7 @@ class DeletedPlaylists extends Component
     public function restorePlaylist($playlistId)
     {
         $playlist = Playlist::onlyTrashed()->find($playlistId);
-        $playlist->restoreAtEnd();
+        $playlist->restore();
         $this->emit('undeleted', $playlistId);
         $this->updatePlaylists();
         $this->emit('toast', 'Przywrócono: "' . $playlist->title . '"');
