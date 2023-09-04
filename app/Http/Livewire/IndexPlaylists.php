@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Category;
 use App\Models\Playlist;
 use Livewire\Component;
-
+use Illuminate\Support\Facades\Cookie;
 class IndexPlaylists extends Component
 {
     public $playlists;
@@ -34,7 +34,19 @@ class IndexPlaylists extends Component
     public function mount()
     {
         $this->categories = Category::oldest()->get();
+
+        #if cookie is set, get id of category from cookie, otherwise get id of last category
+        $lastCategoryId = Cookie::get('categoryId');
         $this->category = $this->categories->last();
+
+        if ($lastCategoryId) {
+            //get category by id from $this->categories
+            $tempCat = $this->categories->firstWhere('id', $lastCategoryId);
+            if ($tempCat) {
+                $this->category = $tempCat;
+            }
+        }
+
         $this->updateTags();
         $this->filterTags = collect();
         $this->playlists = collect();
