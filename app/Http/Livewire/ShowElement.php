@@ -23,20 +23,16 @@ class ShowElement extends Component
     {
         $this->playlist->tags = $this->playlist->tags()->get();
         // $this->playlist = Playlist::find($this->playlist->id)->with('tags')->first();
-        // $this->playlist->tags = $this->playlist->tags()->get();
-
     }
 
     public function rate($rate)
     {
         $this->playlist->rate($rate);
-        //$this->emit('rated');
     }
 
     public function setDifficulty($difficulty)
     {
         $this->playlist->setDifficulty($difficulty);
-        //$this->emit('rated');
     }
 
     public function attachTag($tag_id)
@@ -84,47 +80,29 @@ class ShowElement extends Component
 
     public function moveUp()
     {
-        $target = Playlist::where('order', ($this->playlist->order) - 1)->where('category_id',  $this->playlist->category_id)->first();
-        if ($target) {
-            $this->playlist->moveBy(-1);
-            $target->moveBy(1);
+        if ($this->playlist->moveBy(-1)) {
             $this->emit('moved');
         }
     }
     public function moveDown()
     {
-        $target = Playlist::where('order', ($this->playlist->order) + 1)->where('category_id',  $this->playlist->category_id)->first();
-        if ($target) {
-            $this->playlist->moveBy(1);
-            $target->moveBy(-1);
+        if ($this->playlist->moveBy(1)) {
             $this->emit('moved');
         }
     }
-    public function moveTo($targetNumber)
+    public function moveTo($targetOrder)
     {
         //move id to target position, move all between id and target up or down
-        if ($this->playlist->order < $targetNumber) //move down
-        {
-            foreach (Playlist::where('order', '>',  $this->playlist->order)->where('order', '<=', $targetNumber)->where('category_id',  $this->playlist->category_id)->get() as $playlist) {
-                $playlist->moveBy(-1);
-            }
-        } else //move up
-        {
-            foreach (Playlist::where('order', '<',  $this->playlist->order)->where('order', '>=', $targetNumber)->where('category_id',  $this->playlist->category_id)->get() as $playlist) {
-                $playlist->moveBy(1);
-            }
-        }
-        $this->playlist->order = $targetNumber;
-        $this->playlist->save();
+        $this->playlist->moveTo($targetOrder);
         $this->emit('moved');
     }
 
     public function changeElementCategory($new_category_id)
     {
-        $oldCategoryOrder=$this->playlist->order;
-        $this->playlist->category_id = $new_category_id;
-        $this->playlist->order = 1 + Playlist::where('category_id', $new_category_id)->max('order');
-        $this->playlist->save();
-        $this->emit('changedElementCategory', $this->playlist->id,$oldCategoryOrder);
+        $oldCategoryOrder = $this->playlist->order;
+        if ($this->playlist->changeCategory($new_category_id)) {
+            $this->emit('changedElementCategory', $this->playlist->id, $oldCategoryOrder);
+            $this->emit('toast', 'Zmieniono kategorię');
+        }
     }
 }

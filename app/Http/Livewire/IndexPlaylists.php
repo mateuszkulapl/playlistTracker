@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Category;
 use App\Models\Playlist;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class IndexPlaylists extends Component
@@ -99,6 +98,7 @@ class IndexPlaylists extends Component
 
     public function onMove()
     {
+        //refresh all playlists, can be optimized to refresh only the moved playlist on ShowElement, but hydration of each playlist generates more queries
         $this->updatePlalists();
     }
 
@@ -112,7 +112,7 @@ class IndexPlaylists extends Component
     }
 
     /**
-     * On playlist delete remove playlist from the list of playlists, decrement order of all playlists with higher order in database and in the list
+     * On playlist delete remove playlist from the list of playlists
      *
      * @param string $id
      * @param int $order
@@ -120,13 +120,8 @@ class IndexPlaylists extends Component
      */
     public function onPlaylistDelete($id, $order)
     {
-        DB::table('playlists')->where('order', '>', $order)->where('category_id', $this->category->id)->decrement('order');
         $this->playlists = $this->playlists->reject(function ($playlist) use ($id) {
             return $playlist->id == $id;
-        });
-        //do the same for the playlists to not run additional queries
-        $this->playlists->where('order', '>', $order)->each(function ($playlist) {
-            $playlist->order--;
         });
     }
 
@@ -191,19 +186,17 @@ class IndexPlaylists extends Component
      * 
      *
      * @param string $id
-     * @param int $order
+     * @param int $order order of the removed playlist
      * @return void
      */
-    public function onChangedElementCategory($id,$order)
+    public function onChangedElementCategory($id, $order)
     {
-        DB::table('playlists')->where('order', '>', $order)->where('category_id', $this->category->id)->decrement('order');
-        $this->playlists = $this->playlists->reject(function ($playlist) use ($id) {
-            return $playlist->id == $id;
-        });
-        //do the same for the playlists to not run additional queries
-        $this->playlists->where('order', '>', $order)->each(function ($playlist) {
-            $playlist->order--;
-        });
+        // $this->playlists = $this->playlists->reject(function ($playlist) use ($id) {
+        //     return $playlist->id == $id;
+        // });
+        // //update order to not run additional queries
+        // $this->playlists->where('order', '>', $order)->each(function ($playlist) {
+        //     $playlist->order--;
+        // });
     }
-
 }

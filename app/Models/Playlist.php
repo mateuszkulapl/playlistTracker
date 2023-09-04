@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -54,8 +55,10 @@ class Playlist extends Model
     protected function duration(): Attribute
     {
         return Attribute::make(
-            get: fn (int|null $value) => CarbonInterval::create(0)->seconds($value)->cascade(),
-            set: fn (CarbonInterval $value) => $value->totalSeconds
+            get: fn (int|null $value) => CarbonInterval::create(0)
+                ->seconds($value)
+                ->cascade(),
+            set: fn (CarbonInterval $value) => $value->totalSeconds,
         );
     }
 
@@ -65,7 +68,7 @@ class Playlist extends Model
         if (isset($im->$size)) {
             return $im->$size->url;
         } else {
-            return "";
+            return '';
         }
     }
 
@@ -79,11 +82,48 @@ class Playlist extends Model
         $this->watchedAt = null;
         $this->save();
     }
-
+    /**
+     * Move the playlist by offset, update all other playlists in the same category
+     *
+     * @param int $offset
+     * @return boolean true if moved, false if not
+     * 
+     */
     public function moveBy($offset)
     {
+        //move up
+        if ($offset < 0) {
+            $offset = max($offset, 1 - $this->order);
+            if ($offset == 0)
+                return false;
+            $this->category
+                ->playlists()
+                ->where('order', '>=', $this->order + $offset)
+                ->where('order', '<', $this->order)
+                ->increment('order');
+        } else {
+            //move down
+            if ($offset > 0) {
+                $offset = min($offset, $this->category->playlists()->max('order') - $this->order);
+                if ($offset == 0)
+                    return false;
+                $this->category
+                    ->playlists()
+                    ->where('order', '>', $this->order)
+                    ->where('order', '<=', $this->order + $offset)
+                    ->decrement('order');
+            } else {
+                //no move
+                return false;
+            }
+        }
         $this->order = $this->order + $offset;
         $this->save();
+        return true;
+    }
+    public function moveTo($targetPosition)
+    {
+        return $this->moveBy($targetPosition - $this->order);
     }
 
     public function getLink()
@@ -101,10 +141,12 @@ class Playlist extends Model
     }
     public function setDifficulty($difficulty)
     {
-        if ($difficulty > 5)
+        if ($difficulty > 5) {
             $difficulty = 5;
-        if ($difficulty < 1)
+        }
+        if ($difficulty < 1) {
             $difficulty = null;
+        }
         $this->difficulty = $difficulty;
         $this->save();
     }
@@ -119,14 +161,26 @@ class Playlist extends Model
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
-    public function restoreAtEnd()
-    {
-        $this->restore();
-        $this->moveToLast();
-    }
     public function moveToLast()
     {
-        $this->order = $this->category->playlists()->max('order') + 1;
+        $this->order = $this->category->playlists()->where('id', '<>', $this->id)->max('order') + 1; //do not iclude itself, because it can have wrong order, eg. when it is restored
         $this->save();
+    }
+
+    public function changeCategory($newCategoryId)
+    {
+        //TODO: fix tags, tags are related to category
+        $newCategory = Category::find($newCategoryId);
+        if (!$newCategory) {
+            return false;
+        }
+        $oldOrder = $this->order;
+        $oldCategory = $this->category;
+        $this->category()->associate($newCategory);
+        $this->moveToLast();
+        Playlist::where('category_id', $oldCategory->id)
+            ->where('order', '>', $oldOrder)
+            ->decrement('order');
+        return true;
     }
 }
