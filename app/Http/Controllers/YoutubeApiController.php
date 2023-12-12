@@ -14,7 +14,7 @@ class YoutubeApiController extends Controller
     private $apiKey;
     public function __construct()
     {
-        $this->apiKey=env('YOUTUBE_API_KEY');
+        $this->apiKey = env('YOUTUBE_API_KEY');
     }
     public function videos(Collection $videoIds, $part = 'snippet,contentDetails')
     {
@@ -61,7 +61,7 @@ class YoutubeApiController extends Controller
             $apiVideo = $apiData->firstWhere('id', $video->id);
             if ($apiVideo) {
                 $video->title = $apiVideo->snippet->title;
-                $video->description = Str::limit($apiVideo->snippet->description,3000,"");
+                $video->description = Str::limit($apiVideo->snippet->description, 3000, "");
                 $video->thumbnails = json_encode($apiVideo->snippet->thumbnails);
                 $video->duration = CarbonInterval::make($apiVideo->contentDetails->duration);
                 $video->publishedAt = Carbon::parse($apiVideo->snippet->publishedAt);
@@ -72,8 +72,12 @@ class YoutubeApiController extends Controller
         return $videos;
     }
 
-    public function playlistItems(string $playlistId, $part = 'contentDetails')
+    public function playlistItems(string $playlistId, $part = 'contentDetails', $pageNumber = 1, $pageToken = null)
     {
+        if ($pageNumber > 10) {
+            Log::warning('Youtube API error, too many pages', ['playlistId' => $playlistId]);
+            return collect();
+        }
         Log::info($playlistId);
         $items = collect();
         $response =  Http::acceptJson()->withUrlParameters([
@@ -87,14 +91,17 @@ class YoutubeApiController extends Controller
                 'part' => $part,
                 'playlistId' => $playlistId,
                 'maxResults' => 50,
-                'key' => $this->apiKey
+                'key' => $this->apiKey,
+                'pageToken' => $pageToken
             ]
         );
         if ($response->successful()) {
-
             $responseJson = json_decode($response->body());
             if (isset($responseJson->items)) {
                 $items = collect($responseJson->items);
+                if (isset($responseJson->nextPageToken)) {
+                    $items = $items->merge($this->playlistItems($playlistId, $part, $pageNumber + 1, $responseJson->nextPageToken));
+                }
             } else {
                 Log::error('Youtube API error, no items', ['response' => $response]);
             }
