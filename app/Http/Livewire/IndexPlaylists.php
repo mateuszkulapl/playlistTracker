@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Playlist;
 use Livewire\Component;
 use Illuminate\Support\Facades\Cookie;
+
 class IndexPlaylists extends Component
 {
     public $playlists;
@@ -15,21 +16,23 @@ class IndexPlaylists extends Component
     public $categories;
     public $tags;
     public $filterTags;
+    public $filterChannels;
     public $loaded;
-    public $showCategoryForm = false;
-    public $newCategoryName;
 
     protected $listeners = [
         'tagCreated' => 'onTagChange',
         'tagDeleted' => 'onTagChange',
         'tagsSelected' => 'onTagsSelect',
+        'channelsSelected' => 'onChannelsSelect',
         'deleted' => 'onPlaylistDelete',
         'undeleted' => 'onPlaylistUndelete',
         'moved' => 'onMove',
         'playlistCreated' => 'onPlaylistCreate',
-        'changedElementCategory' => 'onChangedElementCategory'
+        'changedElementCategory' => 'onChangedElementCategory',
+        'categoryAdded' => 'onCategoryAdded',
+        'categoryRenamed' => 'onCategoryRenamed',
+        'categoryDeleted' => 'onCategoryDeleted',
     ];
-
 
     public function mount()
     {
@@ -49,9 +52,9 @@ class IndexPlaylists extends Component
 
         $this->updateTags();
         $this->filterTags = collect();
+        $this->filterChannels = collect();
         $this->playlists = collect();
         $this->loaded = false;
-        $this->newCategoryName = '';
     }
 
     public function loadPlaylists()
@@ -71,10 +74,12 @@ class IndexPlaylists extends Component
             $this->playlists = collect();
             return;
         }
-        $playlistQuery = $this->category->playlists()->with('tags');
+        $playlistQuery = $this->category->playlists()->with(['tags', 'category']);
         $playlistQuery = $this->appendTagsQueryIfNecessary($playlistQuery);
+        $playlistQuery = $this->appendChannelsQueryIfNecessary($playlistQuery);
         $this->playlists = $playlistQuery->orderBy('order')->get();
     }
+
     public function updateTags()
     {
         if ($this->category)
@@ -96,6 +101,7 @@ class IndexPlaylists extends Component
     public function filterByCategory($id)
     {
         $this->filterTags = collect();
+        $this->filterChannels = collect();
         $this->category = Category::find($id);
         $this->updatePlalists();
         $this->updateTags();
@@ -110,7 +116,6 @@ class IndexPlaylists extends Component
 
     public function onMove()
     {
-        //refresh all playlists, can be optimized to refresh only the moved playlist on ShowElement, but hydration of each playlist generates more queries
         $this->updatePlalists();
     }
 
@@ -121,6 +126,45 @@ class IndexPlaylists extends Component
             $this->filterTags->push($tag_id);
         }
         $this->updatePlalists();
+    }
+
+    public function onChannelsSelect($channels)
+    {
+        $this->filterChannels = collect($channels);
+        $this->updatePlalists();
+    }
+
+    public function onCategoryAdded($categoryId)
+    {
+        $cat = Category::find($categoryId);
+        $this->categories->push($cat);
+        if (!$this->category) {
+            $this->filterByCategory($cat->id);
+        }
+    }
+
+    public function onCategoryRenamed($id, $newName)
+    {
+        $this->categories = $this->categories->map(function ($c) use ($id, $newName) {
+            if ($c->id == $id) {
+                $c->name = $newName;
+            }
+            return $c;
+        });
+        if ($this->category && $this->category->id == $id) {
+            $this->category->name = $newName;
+        }
+    }
+
+    public function onCategoryDeleted($id, $nextCategoryId)
+    {
+        $this->categories = $this->categories->reject(fn($c) => $c->id == $id)->values();
+
+        if ($this->category && $this->category->id == $id) {
+            if ($nextCategoryId) {
+                $this->filterByCategory($nextCategoryId);
+            }
+        }
     }
 
     /**
@@ -157,10 +201,11 @@ class IndexPlaylists extends Component
     {
         $playlistQuery = Playlist::where('id', $playlistId)->where('category_id', $this->category->id);
         $playlistQuery = $this->appendTagsQueryIfNecessary($playlistQuery);
+        $playlistQuery = $this->appendChannelsQueryIfNecessary($playlistQuery);
         $playlist = $playlistQuery->with('tags')->first();
         if ($playlist) {
             $this->playlists->push($playlist);
-        };
+        }
     }
 
     private function appendTagsQueryIfNecessary($query)
@@ -173,29 +218,19 @@ class IndexPlaylists extends Component
         }
         return $query;
     }
-    public function showCategoryForm()
+
+    private function appendChannelsQueryIfNecessary($query)
     {
-        $this->showCategoryForm = true;
-    }
-    public function addCategory()
-    {
-        $this->validate([
-            'newCategoryName' => 'required|unique:categories,name'
-        ]);
-        $category = Category::create([
-            'name' => $this->newCategoryName
-        ]);
-        $this->categories->push($category);
-        $this->showCategoryForm = false;
-        $this->newCategoryName = '';
-        if (!$this->category) {
-            $this->filterByCategory($category->id);
+        $filterChannels = $this->filterChannels;
+        if ($filterChannels->count() > 0) {
+            $query->whereIn('channelTitle', $filterChannels);
         }
+        return $query;
     }
 
 
     /**
-     * 
+     *
      *
      * @param string $id
      * @param int $order order of the removed playlist

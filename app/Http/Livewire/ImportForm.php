@@ -17,6 +17,7 @@ class ImportForm extends Component
     public $categoryName;
     protected $listeners = [
         'categorySelected' => 'changeCategory',
+        'startChannelImport' => 'importFromChannel',
     ];
 
 
@@ -39,6 +40,12 @@ class ImportForm extends Component
         $category = Category::find($id);
         $this->categoryId = $category->id;
         $this->categoryName = $category->name;
+    }
+
+    public function importFromChannel($uploadsPlaylistId)
+    {
+        $this->links = 'https://www.youtube.com/playlist?list=' . $uploadsPlaylistId;
+        $this->import();
     }
 
 

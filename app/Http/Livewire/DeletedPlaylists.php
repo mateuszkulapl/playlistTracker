@@ -10,7 +10,7 @@ use Livewire\Component;
 class DeletedPlaylists extends Component
 {
     public Collection $playlists;
-    public Category $category;
+    public $category;
     public bool $open = false;
     public bool $loaded = false;
 

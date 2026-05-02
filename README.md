@@ -37,7 +37,7 @@ Playlist Tracker is a web application that helps users keep track of YouTube vid
 4. Copy the `.env.example` file to `.env`: 
 `cp .env.example .env`
 
-5. Update the `.env` file with your database credentials.
+5. Update the `.env` file with your database credentials and YOUTUBE_API_KEY.
 
 6. Generate the application key:
 `php artisan key:generate`
