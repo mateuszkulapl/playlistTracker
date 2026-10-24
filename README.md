@@ -31,7 +31,8 @@ Playlist Tracker is a web application that helps users keep track of YouTube vid
 
 3. Install the dependencies:
 `composer install`
-`npm install`
+`npm install` (Node 20.19+ or 22.12+)
+`npm run build` (for development: `npm run dev`)
 
 
 4. Copy the `.env.example` file to `.env`: 

@@ -9,8 +9,7 @@
     @env('local')
     <script src="https://cdn.jsdelivr.net/gh/underground-works/clockwork-browser@1/dist/toolbar.js"></script>
     @endenv
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="/favicon.ico" rel="stylesheet">
     @livewireStyles
 </head>
@@ -19,7 +18,7 @@
     <x-layout.header />
     <x-layout.main>
         {{ $slot }}
-        <button class="hidden fixed z-90 bottom-8 right-8 border-1 w-12 h-12 rounded-full drop-shadow-md text-3xl font-black z-40 " id="scrollTop" title="Wróć na górę strony" onclick="goToTop()">&uarr;</button>
+        <button class="hidden fixed z-90 bottom-8 right-8 border-1 w-12 h-12 rounded-full drop-shadow-md text-3xl font-black z-40 " id="scrollTop" title="Wróć na górę strony">&uarr;</button>
         {{-- <audio class="hidden" id="cheer" controls autoplay>
             <source class="hidden" src="cheer.mp3" type="audio/mpeg">
         </audio> --}}
@@ -29,7 +28,7 @@
         <p>&copy; {{ config('app.name') }}</p>
     </x-layout.footer>
     @livewireScripts
-    <script src="{{ mix('js/app-document-end.js') }}" defer></script>
+    @vite('resources/js/app-document-end.js')
 </body>
 
 </html>
