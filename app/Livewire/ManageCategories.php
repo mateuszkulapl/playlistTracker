@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Category;
 use Livewire\Component;
@@ -59,7 +59,7 @@ class ManageCategories extends Component
         $this->categories->push($category);
         $this->newCategoryName = '';
         $this->showAddForm = false;
-        $this->emit('categoryAdded', $category->id);
+        $this->dispatch('categoryAdded', $category->id);
     }
 
     public function startEdit($id)
@@ -90,7 +90,7 @@ class ManageCategories extends Component
         });
         $this->editingCategoryId = null;
         $this->editingCategoryName = '';
-        $this->emit('categoryRenamed', $cat->id, $cat->name);
+        $this->dispatch('categoryRenamed', $cat->id, $cat->name);
     }
 
     public function confirmDelete($id)
@@ -121,6 +121,6 @@ class ManageCategories extends Component
         $this->categories = $this->categories->reject(fn($c) => $c->id == $id)->values();
         $this->confirmDeleteCategoryId = null;
         $nextCategoryId = $this->categories->last()?->id;
-        $this->emit('categoryDeleted', $id, $nextCategoryId);
+        $this->dispatch('categoryDeleted', $id, $nextCategoryId);
     }
 }

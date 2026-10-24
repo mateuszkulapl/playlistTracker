@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(PlaylistController::class)->group(function () {
     Route::get('/', 'index')->name('playlist.index');
-    Route::post('/', 'index')->name('playlist.index');
+    Route::post('/', 'index');
 });
 
 Route::get(

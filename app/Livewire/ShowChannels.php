@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Category;
 use Illuminate\Support\Facades\Http;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ShowChannels extends Component
@@ -11,8 +12,6 @@ class ShowChannels extends Component
     public $channels;
     public $category;
     public $selectedChannels = [];
-
-    protected $listeners = ['categorySelected' => 'categorySelected'];
 
     public function mount($category)
     {
@@ -42,7 +41,7 @@ class ShowChannels extends Component
         } else {
             $this->selectedChannels[] = $channel;
         }
-        $this->emit('channelsSelected', $this->selectedChannels);
+        $this->dispatch('channelsSelected', $this->selectedChannels);
     }
 
     public function importChannel($channelTitle)
@@ -66,12 +65,14 @@ class ShowChannels extends Component
 
         if (!$uploadsPlaylistId) return;
 
-        $this->emit('startChannelImport', $uploadsPlaylistId);
+        $this->dispatch('startChannelImport', $uploadsPlaylistId);
     }
 
-    public function categorySelected($category_id)
+    #[On('categorySelected')]
+
+    public function categorySelected($categoryId)
     {
-        $this->category = Category::find($category_id);
+        $this->category = Category::find($categoryId);
         $this->channels = $this->fetchChannels();
         $this->selectedChannels = [];
     }

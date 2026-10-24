@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Category;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ShowAwards extends Component
@@ -12,18 +13,6 @@ class ShowAwards extends Component
     public $progressPercentage;
     public $awards;
 
-    protected $listeners = [
-        'watched' => 'getPercentages',
-        'unwatched' => 'getPercentages',
-        'progressed' => 'getPercentages',
-        'unprogressed' => 'getPercentages',
-        'deleted' => 'getPercentages',
-        'undeleted' => 'getPercentages',
-        'categorySelected' => 'changeCategory',
-        'awardsupdated' => 'getAwards',
-
-    ];
-
     public function mount($category)
     {
 
@@ -32,19 +21,27 @@ class ShowAwards extends Component
         $this->getAwards();
     }
 
-    function getPercentages()
+    #[On('watched')]
+    #[On('unwatched')]
+    #[On('progressed')]
+    #[On('unprogressed')]
+    #[On('deleted')]
+    #[On('undeleted')]
+    public function getPercentages()
     {
         $this->percentage = $this->category->watchedPercentage(true);
         $this->progressPercentage = $this->category->inProgressPercentage();
     }
-    public function changeCategory($id)
+    #[On('categorySelected')]
+    public function changeCategory($categoryId)
     {
-        $this->category = Category::find($id);
+        $this->category = Category::find($categoryId);
 
         $this->getPercentages();
         $this->getAwards();
     }
 
+    #[On('awardsupdated')]
     public function getAwards()
     {
         $this->awards = $this->category->awards()->orderBy('percentage')->get();

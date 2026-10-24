@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Livewire\ManageCategories;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class ViewTest extends TestCase
@@ -11,8 +13,9 @@ class ViewTest extends TestCase
 
     public function test_add_category_button_is_visible(): void
     {
-        $response = $this->get('/');
-        $response->assertSeeText('Dodaj kategorię');
+        Livewire::test(ManageCategories::class)
+            ->call('toggle')
+            ->assertSeeText('Dodaj kategorię');
     }
 
     public function test_add_tag_input_is_visible(): void

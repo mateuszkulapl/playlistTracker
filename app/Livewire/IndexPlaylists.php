@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Playlist;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Support\Facades\Cookie;
 
@@ -18,21 +19,6 @@ class IndexPlaylists extends Component
     public $filterTags;
     public $filterChannels;
     public $loaded;
-
-    protected $listeners = [
-        'tagCreated' => 'onTagChange',
-        'tagDeleted' => 'onTagChange',
-        'tagsSelected' => 'onTagsSelect',
-        'channelsSelected' => 'onChannelsSelect',
-        'deleted' => 'onPlaylistDelete',
-        'undeleted' => 'onPlaylistUndelete',
-        'moved' => 'onMove',
-        'playlistCreated' => 'onPlaylistCreate',
-        'changedElementCategory' => 'onChangedElementCategory',
-        'categoryAdded' => 'onCategoryAdded',
-        'categoryRenamed' => 'onCategoryRenamed',
-        'categoryDeleted' => 'onCategoryDeleted',
-    ];
 
     public function mount()
     {
@@ -105,20 +91,24 @@ class IndexPlaylists extends Component
         $this->category = Category::find($id);
         $this->updatePlalists();
         $this->updateTags();
-        $this->emit('categorySelected', $this->category->id);
+        $this->dispatch('categorySelected', categoryId: $this->category->id);
     }
 
+    #[On('tagCreated')]
+    #[On('tagDeleted')]
     public function onTagChange()
     {
         $this->tags = $this->category->tags()->orderBy('name')->get();
         $this->updatePlalists();
     }
 
+    #[On('moved')]
     public function onMove()
     {
         $this->updatePlalists();
     }
 
+    #[On('tagsSelected')]
     public function onTagsSelect($tags)
     {
         $this->filterTags = collect();
@@ -128,12 +118,14 @@ class IndexPlaylists extends Component
         $this->updatePlalists();
     }
 
+    #[On('channelsSelected')]
     public function onChannelsSelect($channels)
     {
         $this->filterChannels = collect($channels);
         $this->updatePlalists();
     }
 
+    #[On('categoryAdded')]
     public function onCategoryAdded($categoryId)
     {
         $cat = Category::find($categoryId);
@@ -143,6 +135,7 @@ class IndexPlaylists extends Component
         }
     }
 
+    #[On('categoryRenamed')]
     public function onCategoryRenamed($id, $newName)
     {
         $this->categories = $this->categories->map(function ($c) use ($id, $newName) {
@@ -156,6 +149,7 @@ class IndexPlaylists extends Component
         }
     }
 
+    #[On('categoryDeleted')]
     public function onCategoryDeleted($id, $nextCategoryId)
     {
         $this->categories = $this->categories->reject(fn($c) => $c->id == $id)->values();
@@ -174,6 +168,7 @@ class IndexPlaylists extends Component
      * @param int $order
      * @return void
      */
+    #[On('deleted')]
     public function onPlaylistDelete($id, $order)
     {
         $this->playlists = $this->playlists->reject(function ($playlist) use ($id) {
@@ -187,11 +182,13 @@ class IndexPlaylists extends Component
      * @param string $playlistId
      * @return void
      */
+    #[On('undeleted')]
     public function onPlaylistUndelete($playlistId)
     {
         $this->onNewPlaylist($playlistId);
     }
 
+    #[On('playlistCreated')]
     public function onPlaylistCreate($playlistId)
     {
         $this->onNewPlaylist($playlistId);
@@ -236,6 +233,7 @@ class IndexPlaylists extends Component
      * @param int $order order of the removed playlist
      * @return void
      */
+    #[On('changedElementCategory')]
     public function onChangedElementCategory($id, $order)
     {
         // $this->playlists = $this->playlists->reject(function ($playlist) use ($id) {

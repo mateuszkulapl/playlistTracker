@@ -1,4 +1,5 @@
-Livewire.on('toast', msg => {
+document.addEventListener('livewire:init', () => {
+Livewire.on('toast', ({ msg }) => {
     let toast = document.getElementById('toast-template').content.cloneNode(true);
     let randomIdString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     toast.firstElementChild.id = randomIdString;
@@ -17,6 +18,7 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
 
-Livewire.on('categorySelected', categoryId => {
+Livewire.on('categorySelected', ({ categoryId }) => {
     setCookie('categoryId', categoryId, categoryId);
 })
+});
