@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Playlist;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class DeletedPlaylists extends Component
@@ -13,12 +14,6 @@ class DeletedPlaylists extends Component
     public $category;
     public bool $open = false;
     public bool $loaded = false;
-
-
-    protected $listeners = [
-        'deleted' => 'onPlaylistDelete',
-        'categorySelected' => 'onCategoryChange',
-    ];
 
 
     public function mount($category)
@@ -61,15 +56,17 @@ class DeletedPlaylists extends Component
     {
         $playlist = Playlist::onlyTrashed()->find($playlistId);
         $playlist->restore();
-        $this->emit('undeleted', $playlistId);
+        $this->dispatch('undeleted', $playlistId);
         $this->updatePlaylists();
-        $this->emit('toast', 'Przywrócono: "' . $playlist->title . '"');
+        $this->dispatch('toast', msg: 'Przywrócono: "' . $playlist->title . '"');
     }
 
+    #[On('deleted')]
     public function onPlaylistDelete()
     {
         $this->updatePlaylists();
     }
+    #[On('categorySelected')]
     public function onCategoryChange($categoryId)
     {
         $this->open = false;

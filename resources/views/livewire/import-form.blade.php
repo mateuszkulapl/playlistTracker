@@ -5,12 +5,12 @@
         Importowanie, proszę czekać&hellip;
     </div>
 
-    <form class="flex flex-col gap-2 mb-4" wire:submit.prevent="import">
+    <form class="flex flex-col gap-2 mb-4" wire:submit="import">
         @csrf
         <div class="flex gap-2 flex-row" wire:loading.remove>
             <label for="links">Linki do filmów lub playlisty</label>
             <div class="w-full">
-                <textarea class="border-2 border-gray-200 rounded-md p-2 w-full" id="links" type="text" wire:model.defer="links" placeholder="Wklej link do jednej playlisty albo jednego lub wielu filmów z YouTube">
+                <textarea class="border-2 border-gray-200 rounded-md p-2 w-full" id="links" type="text" wire:model="links" placeholder="Wklej link do jednej playlisty albo jednego lub wielu filmów z YouTube">
                 </textarea>
                 @if (session()->has('error'))
                     <div class="alert text-red-500">
@@ -37,7 +37,7 @@
 
 
     <div id="importnewElement">
-        @if (!$newElements->isEmpty())
+        @if (count($newElements) > 0)
             <table class="w-full text-sm text-left text-gray-600">
                 <thead class="font-bold">
                     <th class="px-2 py-1 border-b border-gray-200">Id</th>
@@ -48,21 +48,21 @@
                 </thead>
                 <tbody>
                     @foreach ($newElements as $newElement)
-                        <tr>
-                            <td class="px-2 py-1 border-b border-gray-200">{{ $newElement->id }}</td>
+                        <tr wire:key="new-{{ $newElement['id'] }}">
+                            <td class="px-2 py-1 border-b border-gray-200">{{ $newElement['id'] }}</td>
                             <td class="px-2 py-1 border-b border-gray-200">
-                                <a href="{{ $newElement->getLink() }}" target="_blank" class="text-blue-600 hover:underline mr-1">↗</a>{{ $newElement->title ?? '-' }}
+                                <a href="{{ $newElement['link'] }}" target="_blank" class="text-blue-600 hover:underline mr-1">↗</a>{{ $newElement['title'] ?? '-' }}
                             </td>
-                            <td class="px-2 py-1 border-b border-gray-200">{{ $newElement->title ? $newElement->durationFormatted() : '-' }}</td>
-                            <td class="px-2 py-1 border-b border-gray-200">{{ $newElement->publishedAt?->format('Y-m-d') ?? '-' }}</td>
+                            <td class="px-2 py-1 border-b border-gray-200">{{ $newElement['durationFormatted'] }}</td>
+                            <td class="px-2 py-1 border-b border-gray-200">{{ $newElement['publishedAt'] ? substr($newElement['publishedAt'], 0, 10) : '-' }}</td>
                             <td class="px-2 py-1 border-b border-gray-200">
-                                @if ($newElement->alreadyExists)
+                                @if ($newElement['alreadyExists'])
                                     <span class="my-2 py-1">Istnieje</span>
                                 @else
-                                    @if ($newElement->title == null)
+                                    @if ($newElement['title'] == null)
                                         <span class="my-2 py-1">Nie znaleziono</span>
                                     @else
-                                        <button class="text-center font-medium text-sm rounded-sm py-1 px-2 shadow-sm transition duration-400 text-gray-800 bg-slate-50 hover:text-white hover:bg-green-600 active:bg-green-700 active:ring-green-900 ring-1 ring-slate-300 hover:ring-green-800 hover:ring-1 focus:ring-2 ring-offset-0 focus:outline-none" wire:click="add('{{ $newElement->id }}')">Dodaj</button>
+                                        <button class="text-center font-medium text-sm rounded-sm py-1 px-2 shadow-sm transition duration-400 text-gray-800 bg-slate-50 hover:text-white hover:bg-green-600 active:bg-green-700 active:ring-green-900 ring-1 ring-slate-300 hover:ring-green-800 hover:ring-1 focus:ring-2 ring-offset-0 focus:outline-none" wire:click="add('{{ $newElement['id'] }}')">Dodaj</button>
                                     @endif
                                 @endif
                             </td>

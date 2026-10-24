@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Tag;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ShowTags extends Component
@@ -11,9 +12,6 @@ class ShowTags extends Component
     public $tags;
     public $category;
     public $selectedTags = [];
-
-
-    protected $listeners = ['tagCreated' => 'refresh', 'categorySelected' => 'categoryselected', 'tagDeleted' => 'refresh'];
 
     public function mount($category, $tags)
     {
@@ -26,6 +24,8 @@ class ShowTags extends Component
         return view('livewire.show-tags');
     }
 
+    #[On('tagCreated')]
+    #[On('tagDeleted')]
     public function refresh()
     {
         $this->tags = $this->category->tags()->orderBy('name')->get();
@@ -38,19 +38,20 @@ class ShowTags extends Component
         } else {
             array_push($this->selectedTags, $tag_id);
         }
-        $this->emit('tagsSelected', $this->selectedTags);
+        $this->dispatch('tagsSelected', $this->selectedTags);
     }
 
     public function delete($tag_id)
     {
         $tag = Tag::find($tag_id);
         $tag->delete();
-        $this->emit('tagDeleted');
+        $this->dispatch('tagDeleted');
     }
 
-    public function categoryselected($category_id)
+    #[On('categorySelected')]
+    public function categoryselected($categoryId)
     {
-        $this->category = Category::find($category_id);
+        $this->category = Category::find($categoryId);
         $this->refresh();
         $this->selectedTags = [];
     }

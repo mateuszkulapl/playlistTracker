@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Award;
 use Livewire\Component;
@@ -16,10 +16,6 @@ class EditAward extends Component
     protected $rules = [
         'name' => 'required|min:1|max:255',
         'percentage' => 'required|decimal:0,2|min:0|max:100',
-    ];
-    protected $listeners = [
-
-
     ];
 
     public function mount($award)
@@ -57,7 +53,7 @@ class EditAward extends Component
 
         if ($this->awardId == null)
             $this->reset('name', 'percentage');
-        $this->emit('awardsupdated');
+        $this->dispatch('awardsupdated');
     }
     public function updateOrder()
     {
@@ -71,7 +67,7 @@ class EditAward extends Component
     {
         if ($this->awardId != null) {
             Award::find($this->awardId)->delete();
-            $this->emit('awardsupdated');
+            $this->dispatch('awardsupdated');
         }
     }
 }

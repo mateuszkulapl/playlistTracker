@@ -2,7 +2,7 @@
     @if ($channels->isNotEmpty())
         <span class="px-2 mb-1 cursor-pointer bg-slate-900 text-gray-200">Kanały</span>
         @foreach ($channels as $channel)
-            <span @class([
+            <span wire:key="channel-{{ md5($channel) }}" @class([
                 'pl-2 pr-1 inline-flex items-center hover:ring-1 mb-1',
                 'bg-slate-100 text-gray-800' => !in_array($channel, $selectedChannels),
                 'bg-green-800 text-gray-50' => in_array($channel, $selectedChannels),

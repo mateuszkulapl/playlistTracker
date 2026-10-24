@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Tag;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class TagForm extends Component
@@ -10,16 +11,15 @@ class TagForm extends Component
 
     public $name;
     public $category_id;
-
-    protected $listeners = ['categorySelected' => 'categoryselected'];
     protected $rules = [
         'name' => 'required|string|min:3|max:50|unique:tags,name',
         'category_id' => 'required'
     ];
 
-    public function categoryselected($category_id)
+    #[On('categorySelected')]
+    public function categoryselected($categoryId)
     {
-        $this->category_id = $category_id;
+        $this->category_id = $categoryId;
     }
 
     public function mount($category)
@@ -35,7 +35,7 @@ class TagForm extends Component
         $tag->category()->associate($this->category_id);
         $tag->save();
         $this->name = '';
-        $this->emit('tagCreated', $tag);
+        $this->dispatch('tagCreated');
     }
 
     public function render()

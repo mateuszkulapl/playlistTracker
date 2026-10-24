@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Playlist;
 use Livewire\Component;
@@ -12,8 +12,6 @@ class ShowElement extends Component
     public $allTags;
     public $allCategories;
 
-    protected $listeners = [];
-
 
     public function render()
     {
@@ -21,7 +19,7 @@ class ShowElement extends Component
     }
     public function refresh()
     {
-        $this->playlist->tags = $this->playlist->tags()->get();
+        $this->playlist->load('tags');
         // $this->playlist = Playlist::find($this->playlist->id)->with('tags')->first();
     }
 
@@ -39,70 +37,70 @@ class ShowElement extends Component
     {
         $this->playlist->tags()->syncWithoutDetaching($tag_id);
         $this->refresh();
-        //$this->emit('tagAttached');
+        //$this->dispatch('tagAttached');
     }
     public function detachTag($tag_id)
     {
         $this->playlist->tags()->detach($tag_id);
         $this->refresh();
-        // $this->emit('tagDetached');
+        // $this->dispatch('tagDetached');
     }
 
     public function watch()
     {
         $this->playlist->watch();
-        $this->emit('watched');
+        $this->dispatch('watched');
     }
     public function unwatch()
     {
         $this->playlist->unwatch();
-        $this->emit('unwatched');
+        $this->dispatch('unwatched');
     }
 
     public function setProgress()
     {
         $this->playlist->inprogress = true;
         $this->playlist->save();
-        $this->emit('progressed');
+        $this->dispatch('progressed');
     }
     public function setUnprogress()
     {
         $this->playlist->inprogress = false;
         $this->playlist->save();
-        $this->emit('unprogressed');
+        $this->dispatch('unprogressed');
     }
     public function delete()
     {
         $this->playlist->delete();
-        $this->emit('deleted', $this->playlist->id, $this->playlist->order);
-        $this->emit('toast', 'Usunięto: "' . $this->playlist->title . '"');
+        $this->dispatch('deleted', $this->playlist->id, $this->playlist->order);
+        $this->dispatch('toast', msg: 'Usunięto: "' . $this->playlist->title . '"');
     }
 
     public function moveUp()
     {
         if ($this->playlist->moveBy(-1)) {
-            $this->emit('moved');
+            $this->dispatch('moved');
         }
     }
     public function moveDown()
     {
         if ($this->playlist->moveBy(1)) {
-            $this->emit('moved');
+            $this->dispatch('moved');
         }
     }
     public function moveTo($targetOrder)
     {
         //move id to target position, move all between id and target up or down
         $this->playlist->moveTo($targetOrder);
-        $this->emit('moved');
+        $this->dispatch('moved');
     }
 
     public function changeElementCategory($new_category_id)
     {
         $oldCategoryOrder = $this->playlist->order;
         if ($this->playlist->changeCategory($new_category_id)) {
-            $this->emit('changedElementCategory', $this->playlist->id, $oldCategoryOrder);
-            $this->emit('toast', 'Zmieniono kategorię');
+            $this->dispatch('changedElementCategory', $this->playlist->id, $oldCategoryOrder);
+            $this->dispatch('toast', msg: 'Zmieniono kategorię');
         }
     }
 }

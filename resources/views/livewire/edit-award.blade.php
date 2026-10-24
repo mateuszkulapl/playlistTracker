@@ -1,5 +1,5 @@
 <div class="mb-1 pt-2" style="order:{{ $order }}">
-    <form class="flex flex-row items-start justify-start gap-2" id="nowaNagroda" wire:submit.prevent="submit">
+    <form class="flex flex-row items-start justify-start gap-2" id="nowaNagroda" wire:submit="submit">
         @csrf
         <div class="flex flex-col">
             <input class="py-1 px-1  w-32 md:w-48 lg:w-64 xl:w-96 border border-gray-300 rounded-sm text-sm focus:border-blue-500 focus:ring-blue-500" type="text" placeholder="Nazwa nagrody" wire:model="name" wire:loading.attr="disabled" wire:target="submit">

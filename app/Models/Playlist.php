@@ -58,7 +58,7 @@ class Playlist extends Model
             get: fn (int|null $value) => CarbonInterval::create(0)
                 ->seconds($value)
                 ->cascade(),
-            set: fn (CarbonInterval $value) => $value->totalSeconds,
+            set: fn (CarbonInterval $value) => (int) round($value->totalSeconds),
         );
     }
 

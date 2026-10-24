@@ -13,7 +13,7 @@
         @if (!$this->playlists->isEmpty())
             <x-playlists.deleted.table>
                 @foreach ($this->playlists as $playlist)
-                    <tr class="hover:bg-gray-100 border-b border-b-gray-200">
+                    <tr wire:key="deleted-{{ $playlist->id }}" class="hover:bg-gray-100 border-b border-b-gray-200">
                         <td class="px-2">{{ $playlist->title }}</td>
                         <td class="px-2">{{ $playlist->deleted_at->locale(env('CARBON_LOCALE', 'en'))->diffForHumans() }}</td>
                         <td class="px-2">
@@ -21,7 +21,7 @@
                         </td>
                     </tr>
                 @endforeach
-                </x-deleted-playlist-table>
+                </x-playlists.deleted.table>
             @else
                 <div class="text-center text-gray-500 py-2 px-2">
                     <p>Brak usuniętych elementów</p>

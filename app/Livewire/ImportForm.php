@@ -1,24 +1,21 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Http\Controllers\YoutubeApiController;
 use App\Models\Category;
 use App\Models\Playlist;
 use Carbon\CarbonInterval;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ImportForm extends Component
 {
 
     public $categoryId;
-    public $links;
-    public $newElements;
+    public $links = '';
+    public array $newElements = [];
     public $categoryName;
-    protected $listeners = [
-        'categorySelected' => 'changeCategory',
-        'startChannelImport' => 'importFromChannel',
-    ];
 
 
 
@@ -26,8 +23,6 @@ class ImportForm extends Component
     {
         $this->categoryId = $category->id;
         $this->categoryName = $category->name;
-        $this->links = collect();
-        $this->newElements = collect();
     }
 
     public function render()
@@ -35,13 +30,15 @@ class ImportForm extends Component
         return view('livewire.import-form');
     }
 
-    public function changeCategory($id)
+    #[On('categorySelected')]
+    public function changeCategory($categoryId)
     {
-        $category = Category::find($id);
+        $category = Category::find($categoryId);
         $this->categoryId = $category->id;
         $this->categoryName = $category->name;
     }
 
+    #[On('startChannelImport')]
     public function importFromChannel($uploadsPlaylistId)
     {
         $this->links = 'https://www.youtube.com/playlist?list=' . $uploadsPlaylistId;
@@ -49,27 +46,9 @@ class ImportForm extends Component
     }
 
 
-    public function hydrateNewElements($value)
-    {
-        $this->newElements = $this->newElements->map(function ($item, $key) {
-            $item['duration'] = CarbonInterval::seconds($item['duration'])->cascade();
-            return new Playlist($item);
-        });
-    }
-
-    public function dehydrateNewElements($value)
-    {
-        $this->newElements = $this->newElements->map(function ($item, $key) {
-            $totalSeconds = $item->duration->totalSeconds;
-            $i = $item->toArray();
-            $i['duration'] = $totalSeconds;
-            return $i;
-        });
-    }
-
     public function import()
     {
-        $this->newElements = collect();
+        $this->newElements = [];
         $this->validate([
             'links' => 'required|string',
         ]);
@@ -120,36 +99,42 @@ class ImportForm extends Component
             }
         }
 
-        $input->each(function ($videoId, $key) {
+        $videos = $input->map(function ($videoId) {
             $playlist = new Playlist();
             $playlist->id = $videoId;
-            $this->newElements->push($playlist);
-        });
+            return $playlist;
+        })->values();
 
-        $this->newElements = $ytApi->updateVideos($this->newElements);
-        $this->checkIfNewPlaylistsAlreadyExists();
-    }
-    public function checkIfNewPlaylistsAlreadyExists()
-    {
-        $newIds = $this->newElements->pluck('id');
-        $existingIds = Playlist::withTrashed()->whereIn('id', $newIds)->pluck('id');
-        $this->newElements->each(function ($playlist, $key) use ($existingIds) {
-            if ($existingIds->contains($playlist->id))
-                $playlist->alreadyExists = true;
-        });
+        $videos = $ytApi->updateVideos($videos);
+        $existingIds = Playlist::withTrashed()->whereIn('id', $videos->pluck('id'))->pluck('id');
+        $this->newElements = $videos->map(fn(Playlist $video) => [
+            'id' => $video->id,
+            'title' => $video->title,
+            'description' => $video->description,
+            'thumbnails' => $video->thumbnails,
+            'duration' => $video->title ? $video->duration->totalSeconds : null,
+            'durationFormatted' => $video->title ? $video->durationFormatted() : '-',
+            'publishedAt' => $video->publishedAt?->format('Y-m-d H:i:s'),
+            'channelId' => $video->channelId,
+            'channelTitle' => $video->channelTitle,
+            'link' => $video->getLink(),
+            'alreadyExists' => $existingIds->contains($video->id),
+        ])->all();
     }
 
     public function add($id)
     {
-        $new = $this->newElements->where('id', $id)->first();
-        if (!$new)
+        $row = collect($this->newElements)->firstWhere('id', $id);
+        if (!$row || $row['alreadyExists'] || $row['title'] === null) {
             return;
+        }
+        $new = new Playlist(collect($row)->except(['durationFormatted', 'link', 'alreadyExists', 'duration'])->all());
+        $new->id = $row['id'];
+        $new->duration = CarbonInterval::seconds($row['duration'])->cascade();
         $new->order = 1 + Playlist::where('category_id', $this->categoryId)->max('order');
         $new->category_id = $this->categoryId;
         $new->save();
-        $this->newElements = $this->newElements->reject(function ($value, $key) use ($id) {
-            return $value->id == $id;
-        });
-        $this->emit('playlistCreated', $new->id);
+        $this->newElements = collect($this->newElements)->reject(fn($value) => $value['id'] == $id)->values()->all();
+        $this->dispatch('playlistCreated', $new->id);
     }
 }
