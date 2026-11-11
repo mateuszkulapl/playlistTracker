@@ -55,7 +55,7 @@ class LivewireComponentsTest extends TestCase
         $tag = Tag::factory()->create(['category_id' => $category->id]);
 
         Livewire::test(ShowElement::class, ['playlist' => $playlist, 'allTags' => collect([$tag]), 'allCategories' => collect([$category]), 'playlistsCount' => 3])
-            ->call('watch')->assertDispatched('watched')
+            ->call('markWatched')->assertDispatched('watched')
             ->call('unwatch')->assertDispatched('unwatched')
             ->call('setProgress')->assertDispatched('progressed')
             ->call('rate', 4)

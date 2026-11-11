@@ -46,7 +46,7 @@ class ShowElement extends Component
         // $this->dispatch('tagDetached');
     }
 
-    public function watch()
+    public function markWatched()
     {
         $this->playlist->watch();
         $this->dispatch('watched');
